@@ -1,0 +1,90 @@
+A user account has a full name, username, password, email, phone number, age, uploaded content, bookmarked content, liked content, comments, and optionally paypal information and google account integration
+
+A user is identified by their unique id-number (key), their unique username/email/phone# (key)
+A user has a non-unique age/password
+A user has many unique uploaded content
+A user has many unique liked content and bookmarked content
+A user has many non-unique comments, identified by a comment id and username key pair
+
+- Account Table
+    - Account Number : int (key)
+    - Username : str (unique)
+    - email : str (unique)
+    - phone # : int(11) (unique)
+    - full name : str
+    - password : int/str
+    - age/dob : date
+    - paypal info (optional)
+    - google info (optional)
+
+- Video Table
+    - Video ID : int (key)
+    - Video link : file
+    - Associated Account Number : int
+    - Title : str
+    - Description : str
+    - Category : str
+    - views : int
+    - Post date : date
+
+- Comment Table
+    - Comment ID : int (key)
+    - Associated Account Number : int
+    - Comment body : str
+    - Post date : date
+    - Comment posted to : str (video or other)
+    - Thread parent pointer : int (another comment ID)
+    - edited : bool
+
+- Other content Table
+    - Content ID : int (key)
+    - Category : str
+    - Associated Account Number : int
+    - Content body/description : str
+    - Link : file (optional)
+
+- Friends Table
+    - User1 ID : str (lower number when hashed)
+    - User2 ID : str (higher number when hashed)
+    - friend pair ID : int (key)
+
+- Friend Message Table
+    - friend pair ID : int (key)
+    - message body : str
+    - timestamp : date/time
+    - sent from : int (user ID)
+    - link : link (optional)
+
+- Communities Table
+    - Community ID : int (key)
+    - Name : str
+    - Description : str
+
+- Community Messages Table
+    - Community ID : int (key)
+    - Message Body : str
+    - link : link (optional)
+    - timestamp : date/time
+    - sent from : int (user ID)
+
+- Events Table 
+    - Event ID : int (key)
+    - Name : str
+    - Description : str
+    - timestamp : date/time
+    - scheduled time : date/time
+    - location : address
+    - poster ID : int
+    - category
+
+
+Foreign Keys:
+    AssociatedAccountNumber(Video,Comment,Content), PosterID(Events),
+    SentFrom(Messages), User1/User2(Friends) reference AccountNumber(Accounts)
+    PairID(FriendMessages) references PairID(Friends)
+
+
+Relationships
+    - User account (number) is 1:M with videos, comments, content
+    - comments have a 1:M relationship with other comments
+        - comments have only one parent, but can have many children

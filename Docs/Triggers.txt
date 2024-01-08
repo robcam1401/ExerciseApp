@@ -1,0 +1,21 @@
+Account Table:
+    - When an account is created, an Account ID is automatically assigned within the integer limit
+
+Videos/Comments/Content table
+    - When content (videos, comments, etc...) is uploaded: 
+        - A video/comment/content ID is automatically generated and assigned within the integer limit
+        - the user's account information is automatically assigned
+        - the date and time of the upload are recorded and assigned
+        - if there is no given category, the category is NONE
+    - when a comment is edited, an edited tag is added to the comment's entry
+
+Views:
+    Tables will be able to be joined, via account number or content ID
+    - video/content comments can be found by filtering by video/content ID
+        - SELECT * FROM comments WHERE (vidID = videoID)
+            - vidID is the video being viewed, video ID is the comment's video ID
+        - SELECT * FROM comments WHERE (contID = contentID)
+            - same as before, contID is content being viewed, contentID is comment's content ID
+    - seeing a creator's feed can be found by filtering by account number and sorted by date/popularity/etc...
+        - SELECT * FROM videos WHERE (AccNum = AccountNum) SORT BY (date)
+    - 
