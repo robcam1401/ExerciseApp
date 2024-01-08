@@ -23,14 +23,14 @@ create table UserProfile(
     ProfileBanner   text(255),
     Biography       text(255),
     PhoneNumber     int(11),
-    Email           text(50)
+    Email           text(50),
     constraint Profile_pk
     primary key (AccountNumber)
 );
 
 create table UserSettings(
     AccountNumber   int(32)     NOT NULL,
-    AccountPrivacy  int(3)      default 0
+    AccountPrivacy  int(3)      default 0,
     constraint Settings_pk
     primary key (AccountNumber)
 );
@@ -68,6 +68,7 @@ create table Content(
     AccountNumber   int(32)     NOT NULL,
     BodyDescription text(255),
     ContentLink     text(255),
+    UploadDate      datetime    NOT NULL,
     constraint Content_pk
     primary key (ContentID)
 );

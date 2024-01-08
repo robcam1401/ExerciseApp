@@ -4,6 +4,8 @@ USE ExerciseApp
 Additionally, a new row in UserProfile and UserSettings will be created
 */
 
+DELIMITER $$
+
 create trigger NewUser
     Before insert on UserAccount
     for each row
@@ -16,7 +18,7 @@ create trigger NewUser
         insert into UserSettings
         values (AccountNumber, NEW.AccountNumber)
         end if;
-        
+    END$$        
 
 create trigger NewVideo
     Before insert on Videos
@@ -26,6 +28,10 @@ create trigger NewVideo
         then
         set(NEW.VideoID = SELECT MAX(VideoID) + 1)
         end if;
+        if (NEW.UploadDate is NULL)
+        then(NEW.UploadDate = GETDATE())
+        end if;
+    END$$
 
 create trigger NewComment
     Before insert on Comments
@@ -35,6 +41,10 @@ create trigger NewComment
         then
         set(NEW.CommentID = SELECT MAX(CommentID) + 1)
         end if;
+        if (NEW.PostDate is NULL)
+        then(NEW.PostDate = GETDATE())
+        end if;
+    END$$
 
 create trigger NewContent
     Before insert on Content
@@ -44,6 +54,10 @@ create trigger NewContent
         then
         set(NEW.ContentID = SELECT MAX(ContentID) + 1)
         end if;
+        if (NEW.UploadDate is NULL)
+        then(NEW.UploadDate = GETDATE())
+        end if;
+    END$$
 
 create trigger NewFriends
     Before insert on Friends
@@ -53,6 +67,7 @@ create trigger NewFriends
         then
         set(NEW.PairID = SELECT MAX(PairID) + 1)
         end if;
+    END$$
 
 create trigger NewMessages
     Before insert on FriendMessages
@@ -62,6 +77,10 @@ create trigger NewMessages
         then
         set(NEW.MessageID = SELECT MAX(MessageID) + 1)
         end if;
+        if (NEW.SentStamp is NULL)
+        then(NEW.SentStamp = GETDATE())
+        end if;
+    END$$
 
 create trigger NewCommunity
     Before insert on Communities
@@ -71,6 +90,7 @@ create trigger NewCommunity
         then
         set(NEW.CommunityID = SELECT MAX(CommunityID) + 1)
         end if;
+    END$$
 
 create trigger NewCommMessage
     Before insert on CommMessages
@@ -80,6 +100,10 @@ create trigger NewCommMessage
         then
         set(NEW.MessageID = SELECT MAX(MessageID) + 1)
         end if;
+        if (NEW.SentStamp is NULL)
+        then(NEW.SentStamp = GETDATE())
+        end if;
+    END$$
 
 create trigger NewEvent
     Before insert on Events
@@ -89,3 +113,9 @@ create trigger NewEvent
         then
         set(NEW.EventID = SELECT MAX(EventID) + 1)
         end if;
+        if (NEW.PostTime is NULL)
+        then(NEW.PostTime = GETDATE())
+        end if;
+    END$$
+
+DELIMITER ;
