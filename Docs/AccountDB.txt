@@ -6,85 +6,120 @@ A user has many unique uploaded content
 A user has many unique liked content and bookmarked content
 A user has many non-unique comments, identified by a comment id and username key pair
 
+Attributes are listed as name : datatype(size)
+A datatype of str(255) (usually) denotes a file/html link
+
 - Account Table
-    - Account Number : int (key)
-    - Username : str (unique)
-    - email : str (unique)
+    - Account Number : int(32) (key)
+    - Username : str(15) (unique)
+    - email : str(32) (unique)
     - phone # : int(11) (unique)
-    - full name : str
+    - first name : str(15)
+    - middle initial : str(1)
+    - last name : str(15)
     - password : int/str
     - age/dob : date
     - paypal info (optional)
     - google info (optional)
 
+- User Profile Table
+    - Account Number : int(32) (key)
+    - Profile Picture : str(255)
+    - Profile Banner : str(255)
+    - Biography : str(255)
+    - Phone number : int(11)
+    - Email : text(50)
+
+- User Settings table
+    - Account Number : int(32) (key)
+    - Account Privacy : int(3)
+
 - Video Table
-    - Video ID : int (key)
-    - Video link : file
-    - Associated Account Number : int
-    - Title : str
-    - Description : str
-    - Category : str
-    - views : int
+    - Video ID : int(32) (key)
+    - Video link : str(255)
+    - Associated Account Number : int(32)
+    - Title : str(255)
+    - Description : str(255)
+    - Category : str(15)
+    - views : int(32)
     - Post date : date
+    - Thumbnail : str(255)
 
 - Comment Table
-    - Comment ID : int (key)
-    - Associated Account Number : int
-    - Comment body : str
+    - Comment ID : int(32) (key)
+    - Associated Account Number : int(32)
+    - Comment body : str(255)
     - Post date : date
-    - Comment posted to : str (video or other)
-    - Thread parent pointer : int (another comment ID)
+    - Video Comment : int(32) //used if the comment is left on a video, points to the video ID
+    - Content Comment : int(32) //used if the comment is left on a misc content page, points to the content ID
+    - Thread parent pointer : int(32) //(another comment ID)
     - edited : bool
 
 - Other content Table
-    - Content ID : int (key)
-    - Category : str
-    - Associated Account Number : int
-    - Content body/description : str
-    - Link : file (optional)
+    - Content ID : int(32) (key)
+    - Category : str(15)
+    - Associated Account Number : int(32)
+    - Content body/description : str(255)
+    - Link : str(255) (optional) //optional link to pictures/videos/other
+    - Upload Date : date
 
 - Friends Table
-    - User1 ID : str (lower number when hashed)
-    - User2 ID : str (higher number when hashed)
-    - friend pair ID : int (key)
+    - User1 ID : int(32) (lower number when hashed)
+    - User2 ID : int(32) (higher number when hashed)
+    - friend pair ID : int(32) (key)
 
 - Friend Message Table
-    - friend pair ID : int (key)
-    - message body : str
+    - friend pair ID : int(32) (key)
+    - message body : str(255)
     - timestamp : date/time
-    - sent from : int (user ID)
-    - link : link (optional)
+    - sent from : int(32) (user ID)
+    - link : str(255) (optional) // optional link for pictures/video
 
 - Communities Table
-    - Community ID : int (key)
-    - Name : str
-    - Description : str
+    - Community ID : int(32) (key)
+    - Name : str(25)
+    - Description : str(255)
+    - User Owner : int(32)
 
 - Community Messages Table
-    - Community ID : int (key)
-    - Message Body : str
-    - link : link (optional)
+    - Community ID : int(32) (key)
+    - Message ID : int(32)
+    - Message Body : str(255)
+    - link : str(255) (optional) //optional link for pictures/videos sent
     - timestamp : date/time
-    - sent from : int (user ID)
+    - sent from : int(32) (user ID)
 
 - Events Table 
-    - Event ID : int (key)
-    - Name : str
-    - Description : str
+    - Event ID : int(32) (key)
+    - Name : str(25)
+    - Description : str(255)
     - timestamp : date/time
     - scheduled time : date/time
-    - location : address
-    - poster ID : int
-    - category
+    - location : text(255) //address
+    - poster ID : int(32)
+    - category : str(15)
 
 
 Foreign Keys:
-    AssociatedAccountNumber(Video,Comment,Content), PosterID(Events),
-    SentFrom(Messages), User1/User2(Friends) reference AccountNumber(Accounts)
-    PairID(FriendMessages) references PairID(Friends)
-
-
-Relationships
-    - User account (number) is 1:M with videos, comments, content
-    - comments have a 1:M relationship with other comments
-        - comments have only one parent, but can have many children
+    AssociatedAccountNumber(User Profile,User Settings,Video,Comment,Content,Friends,FriendMessages,Communities,Community Messages,Events),
+        refer to UserAccount - Account Number
+    VideoComment(comments)
+        refers to Video - Video ID
+    ContentComment(comments)
+        refers to Comments - Content ID
+    ThreadParent(comments)
+        refers to Comments - Comment ID
+    User1ID,User2ID(Friends)
+        refers to UserAccount - Account Number
+    PairID(Friend Messages)
+        refers to Friends - PairID
+    SentUser(Friend Messages)
+        refers to UserAccount - Account Number
+    CreatedUser(Communities)
+        refers to UserAccount - Account Number
+    Community ID(CommMessages)
+        refers to Communities - Community ID
+    SentUser(CommMessages)
+        refers to UserAccount - Account Number
+    Poster ID(Events)
+        refers to UserAccount - Account Number
