@@ -1,6 +1,6 @@
 A user account has a full name, username, password, email, phone number, age, uploaded content, bookmarked content, liked content, comments, and optionally paypal information and google account integration
 
-A user is identified by their unique id-number (key), their unique username/email/phone# (key)
+A user is identified by their unique id-number (key), their unique username/email/phone#
 A user has a non-unique age/password
 A user has many unique uploaded content
 A user has many unique liked content and bookmarked content
