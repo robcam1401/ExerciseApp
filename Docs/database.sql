@@ -12,7 +12,7 @@ create table UserAccount(
     Lname           varchar(15),
     UserDoB         date        NOT NULL,
     constraint User_pk
-    primary key (AccountNumber)
+    primary key (AccountNumber),
     constraint User_unique
     unique (Username, Email, PhoneNumber)
 );
@@ -56,7 +56,7 @@ create table Comments(
     PostDate        datetime    NOT NULL,
     VideoComment    int(32),    -- used if comment posted under video
     ContentComment  int(32),    -- used if comment posted under content
-    ThreadParent    int(32)     NOT NULL, --Parent Comment ID
+    ThreadParent    int(32)     NOT NULL, /*Parent Comment ID*/
     Edited          boolean     default false,
     constraint Comment_pk
     primary key (CommentID)
@@ -128,19 +128,19 @@ create table Events(
 -- modify tables to create constraints with foreign keys
 
     -- Keys connect Video(AccountNumber) to USerAccount(AccountNumber)
-alter table Video
+alter table Videos
     add constraint video_owner_fk
-    foreign key (AccountNumber) references UserAccount(AccountNumber)
+    foreign key (AccountNumber) references UserAccount(AccountNumber);
 
     -- Keys connect UserProfile(AccountNumber) to UserAccount(AccountNumber)
 alter table UserProfile
     add constraint profile_fk
-    foreign key (AccountNumber) references UserAccount(AccountNumber)
+    foreign key (AccountNumber) references UserAccount(AccountNumber);
 
     -- Keys connect UserSettings(AccountNumber) to UserAccount(AccountNumber)
 alter table UserSettings
     add constraint settings_fk
-    foreign key (AccountNumber) references UserAccount(AccountNumber)
+    foreign key (AccountNumber) references UserAccount(AccountNumber);
 
     -- Keys connect Comments(AccountNumber) to UserAccount(AccountNumber)
     --              Comments(VideoComment) to Video(VideoID)
@@ -148,47 +148,47 @@ alter table UserSettings
     --              Comments(ThreadParent) to Comment(CommentID)
 alter table Comments
     add constraint comment_owner_fk
-    foreign key (AccountNumber) references UserAccount(AccountNumber)
+    foreign key (AccountNumber) references UserAccount(AccountNumber),
     add constraint video_comment_fk
-    foreign key (VideoComment) references Video(VideoID)
+    foreign key (VideoComment) references Videos(VideoID),
     add constraint content_comment_fk
-    foreign key (ContentComment) references Content(ContentID)
+    foreign key (ContentComment) references Content(ContentID),
     add constraint thread_fk
-    foreign key (ThreadParent) references Comment(CommentID)
+    foreign key (ThreadParent) references Comments(CommentID);
 
     -- Keys connect Content(AccountNumber) to UserAccount(AccountNumber)
 alter table Content
     add constraint content_owner_fk
-    foreign key (AccountNumber) references UserAccount(AccountNumber)
+    foreign key (AccountNumber) references UserAccount(AccountNumber);
 
     -- Keys connect Friends(User1) to UserAccount(AccountNumber)
     --              Friends(User2) to UserAccount(AccountNumber)
 alter table Friends
     add constraint user1_fk
-    foreign key (User1) references UserAccount(AccountNumber)
+    foreign key (User1ID) references UserAccount(AccountNumber),
     add constraint user2_fk
-    foreign key (User2) references UserAccount(AccountNumber)
+    foreign key (User2ID) references UserAccount(AccountNumber);
 
     -- Keys connect FriendMessages(PairID) to Friends(PairID)
     --              FriendMessages(SentUser) to UserAccount(AccountNumber)
 alter table FriendMessages
     add constraint friend_pair_fk
-    foreign key (PairID) references Friends(PairID)
+    foreign key (PairID) references Friends(PairID),
     add constraint sent_user_fk
-    foreign key (SentUser) references UserAccount(AccountNumber)
+    foreign key (SentUser) references UserAccount(AccountNumber);
 
     -- Keys connect Communities(CreatedUser) to UserAccount(AccountNumber)
 alter table Communities
     add constraint created_user_fk
-    foreign key (CreatedUser) references UserAccount(AccountNumber)
+    foreign key (CreatedUser) references UserAccount(AccountNumber);
 
     -- Keys connect CommMessages(CommunityID) to Communities(CommunityID)
     --              CommMessages(SentUser) to UserAccount(AccountNumber)
 alter table CommMessages
     add constraint comm_id_fk
-    foreign key (CommunityID) references Community(CommunityID)
+    foreign key (CommunityID) references Communities(CommunityID);
     
     -- Keys connect Events(PosterID) to UserAccount(AccountNumber)
 alter table Events
     add constraint poster_id_fk
-    foreign key (PosterID) references UserAccount(AccountNumber)
+    foreign key (PosterID) references UserAccount(AccountNumber);
