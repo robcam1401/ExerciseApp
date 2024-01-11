@@ -188,6 +188,12 @@ Builder.load_string("""
 <NearYouScreen>:
     Label:
         text: "Near You"
+    
+    MapView:
+        zoom: 20
+        lat: 32
+        lon: -92
+                    
     BoxLayout:
         orentation: "horizontal"
         size_hint: (1,0.1)
