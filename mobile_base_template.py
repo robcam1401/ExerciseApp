@@ -261,8 +261,9 @@ sm = ScreenManager()
  
 # Add the screens to the manager and then supply a name
 # that is used to switch screens
-sm.add_widget(ProfileScreen(name="ProfileScreen"))
+
 sm.add_widget(FeedScreen(name="FeedScreen"))
+sm.add_widget(ProfileScreen(name="ProfileScreen"))
 sm.add_widget(ExploreScreen(name="ExploreScreen"))
 sm.add_widget(SocialScreen(name="SocialScreen"))
 sm.add_widget(NearYouScreen(name="NearYouScreen"))
