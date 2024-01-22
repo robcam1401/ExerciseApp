@@ -1,0 +1,6 @@
+Logging in to the root user on the sql database requires a root username and password.
+I will not be publishing these on Github, but I am holding on to the login details.
+
+The server is estimated to run about $1.68/day, but I can shut off the server when not in use.
+With a $400 credit for 3 months, the cost is 0, but will be ~$50.60 afterwards.
+
