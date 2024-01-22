@@ -11,6 +11,7 @@ from kivy_garden.mapview import MapView
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
+from kivy.uix.tabbedpanel import TabbedPanel
 
 # Login Page
 kv = '''
@@ -39,7 +40,7 @@ kv = '''
                 pos_hint: {'center_x': 0.5, 'center_y': 0.7} 
             Label:
                 text: 'Fitness & Sports App'
-                font_name: 'Times New Roman'          #Font Style
+                font_name: 'Cedarville_Cursive/CedarvilleCursive-Regular.ttf'          #Font Style
                 font_size: '24sp'
                 size_hint_y: None
                 height: self.texture_size[1]
@@ -108,7 +109,7 @@ signup_kv = '''
                 pos_hint: {'center_x': 0.5, 'center_y': 0.7} 
             Label:
                 text: 'Fitness & Sports App'
-                font_name: 'Times New Roman'
+                font_name: 'Cedarville_Cursive/CedarvilleCursive-Regular.ttf'
                 font_size: '30sp'
                 size_hint: None, None
                 size: self.texture_size
@@ -166,7 +167,7 @@ ForgotPassWord_kv = '''
                 pos_hint: {'center_x': 0.5, 'center_y': 0.7} 
             Label:
                 text: 'Fitness & Sports App'
-                font_name: 'Times New Roman'
+                font_name: 'Cedarville_Cursive/CedarvilleCursive-Regular.ttf'
                 font_size: '24sp'
                 size_hint_y: None
                 height: self.texture_size[1]
@@ -219,7 +220,7 @@ Profile_kv = '''
                 spacing: dp(10)
 
                 Image:
-                    source: '/Users/olgabienzobas/Desktop/CSC405/IMG_1633.JPG' 
+                    source: 'IMG_1633.JPG' 
                     size_hint: None, None
                     size: dp(100), dp(80)
                     allow_stretch: True
@@ -488,15 +489,14 @@ NearYou_kv = '''
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1  # White background color
-        Line:
-            rectangle: (self.x + dp(60), self.y + dp(60), self.width - dp(120), self.height - dp(120))
-            width: 1
-            
+        
+
+    
     FloatLayout:
         BoxLayout:
             orientation: 'vertical'
-            spacing: dp(10)
-            padding: dp(10)
+            spacing: dp(5)
+            padding: dp(5)
             pos_hint: {'center_x': .5, 'center_y': .5}
             size_hint: .7, .7
 
@@ -512,7 +512,25 @@ NearYou_kv = '''
 
             # Map or Location Section 
             MapView:
-                # Add MapView properties and functionality here
+                id: mapview
+                lat: 32.5259527
+                lon: -92.6436849
+                zoom: 25
+                size_hint: 1,5
+
+
+                MapMarker:
+                    lat: 50.6394
+                    lon: 3.057
+
+                MapMarker
+                    lat: -33.867
+                    lon: 151.206
+
+            
+                
+
+            
 
 '''
 
@@ -584,6 +602,7 @@ class ExerciseApp(App):
         tab_bar.add_widget(near_you_button)
         tab_bar.add_widget(profile_button)
         tab_bar.add_widget(social_button)
+
         
 
         # Create a layout for the entire app
