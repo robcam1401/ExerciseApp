@@ -12,6 +12,10 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 from kivy.uix.tabbedpanel import TabbedPanel
+from kivymd.uix.list import MDListItem,MDListItemHeadlineText
+from kivymd.app import MDApp
+
+
 
 
 
@@ -44,9 +48,16 @@ class ForgotPasswordScreen(Screen):
 
 class FriendsScreen(Screen):
     pass
-kv = Builder.load_file('main.kv') # This is the existing kv string for the login screen
 
-class ExerciseApp(App):
+class GroupsScreen(Screen):
+    pass
+
+class MessagesScreen(Screen):
+    pass
+
+kv = Builder.load_file('ExerciseAppKivyCode.kv') # This is the existing kv string for the login screen
+
+class ExerciseApp(MDApp):
     def build(self):
         # Create a screen manager without transitions for simplicity
         self.sm = ScreenManager(transition=WipeTransition())
@@ -59,6 +70,8 @@ class ExerciseApp(App):
         near_you_screen = NearYouScreen(name='near_you')
         profile_settings = ProfileSettingsScreen(name='profile_settings')
         friends = FriendsScreen(name='friends')
+        groups = GroupsScreen(name='groups')
+        messages = MessagesScreen(name='messages')
 
         #this will change the order in which the screens appear (Feed Screen is default)
         self.sm.add_widget(LoginScreen(name='login'))
@@ -71,6 +84,8 @@ class ExerciseApp(App):
         self.sm.add_widget(near_you_screen)
         self.sm.add_widget(profile_settings)
         self.sm.add_widget(friends)
+        self.sm.add_widget(groups)
+        self.sm.add_widget(messages)
 
 
 
