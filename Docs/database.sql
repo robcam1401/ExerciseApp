@@ -7,7 +7,7 @@ create table UserAccount(
     Username        varchar(15) NOT NULL,
     Email           varchar(32) NOT NULL,
     -- phone number should be 37 bits to account for all 99 billion phone numbers
-    PhoneNumber     int(11),
+    PhoneNumber     int(37),
     Fname           varchar(15),
     Minit           varchar(1),
     Lname           varchar(15),
@@ -57,7 +57,7 @@ create table Comments(
     PostDate        datetime    NOT NULL,
     VideoComment    int(32),    -- used if comment posted under video
     ContentComment  int(32),    -- used if comment posted under content
-    ThreadParent    int(32)     NOT NULL, /*Parent Comment ID*/
+    ThreadParent    int(32)     NOT NULL, --Parent Comment ID, 0 indicates top-level comment
     Edited          boolean     default false,
     constraint Comment_pk
     primary key (CommentID)

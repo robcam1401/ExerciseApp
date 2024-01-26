@@ -92,3 +92,106 @@ def newVideoInsert(VideoInfo, VideoLink, Thumbnail):
     cursor.close()
     cnx.close()
     return
+
+def newCommentInsertVideo(CommentInfo):
+    cnx,cursor = connect()
+    CommentInfo['CommentID'] = getLastID('Comments','CommentID') + 1
+    add_comment = ("INSERT INTO Comments "
+              "(CommentID, AccountNumber, CommentBody, VideoComment,ThreadParent)"
+              "VALUES (%(CommentID)s, %(AccountNumber)s, %(CommentBody)s, %(VideoComment)s, %(ThreadParent)s)")
+    
+    cursor.execute(add_comment,CommentInfo)
+    cnx.commit()
+
+    cursor.close()
+    cnx.close()
+    return
+def newCommentInsertContent(CommentInfo):
+    cnx,cursor = connect()
+    CommentInfo['CommentID'] = getLastID('Comments','CommentID') + 1
+    add_comment = ("INSERT INTO Comments "
+              "(CommentID, AccountNumber, CommentBody, ContentComment,ThreadParent)"
+              "VALUES (%(CommentID)s, %(AccountNumber)s, %(CommentBody)s, %(ContentComment)s, %(ThreadParent)s)")
+
+    cursor.execute(add_comment,CommentInfo)
+    cnx.commit()
+
+    cursor.close()
+    cnx.close()
+    return
+
+def newContentInsert(ContentInfo):
+    cnx,cursor = connect()
+    ContentInfo['ContentID'] = getLastID('Content','ContentID') + 1
+    add_content = ("INSERT INTO Content "
+              "(ContentID, Category, AccountNumber, BodyDescription,ContentLink)"
+              "VALUES (%(ContentID)s, %(Category)s, %(BodyDescription)s, %(ContentLink)s, %(ThreadParent)s)")
+
+
+    cursor.close()
+    cnx.close()
+    pass
+
+def newContentInsert(ContentInfo,Link):
+    cnx,cursor = connect()
+
+
+    cursor.close()
+    cnx.close()
+    pass
+
+def newFriendsInsert(FriendInfo):
+    cnx,cursor = connect()
+
+
+    cursor.close()
+    cnx.close()
+    pass
+
+def newFriendMessages(MessageInfo):
+    cnx,cursor = connect()
+
+
+    cursor.close()
+    cnx.close()
+    pass
+
+def newFriendMessages(MessageInfo,Link):
+    cnx,cursor = connect()
+
+
+    cursor.close()
+    cnx.close()
+    pass
+
+def newCommunityInsert(CommInfo):
+    cnx,cursor = connect()
+
+
+    cursor.close()
+    cnx.close()
+    pass
+
+def newCommMessages(MessageInfo):
+    cnx,cursor = connect()
+
+
+    cursor.close()
+    cnx.close()
+    pass
+
+def newCommMessages(MessageInfo,Link):
+    cnx,cursor = connect()
+
+
+    cursor.close()
+    cnx.close()
+    pass
+
+def newEvent(EventInfo):
+    cnx,cursor = connect()
+
+
+    cursor.close()
+    cnx.close()
+    pass
