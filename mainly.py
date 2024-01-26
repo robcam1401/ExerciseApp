@@ -1,234 +1,6 @@
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-import mobile_base_template 
-
-Builder.load_string("""
-<ProfileScreen>:
-    Label:
-        text: "profile"
-    BoxLayout:
-        orentation: "horizontal"
-        size_hint: (1,0.1)
-        Button:
-            text: "profile"
-                
-        Button:
-            text: "feed"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'FeedScreen'
-        Button:
-            text: "explore"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'ExploreScreen'
-        Button:
-            text: "social"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'SocialScreen'
-        Button:
-            text: "near you"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'NearYouScreen'
-        
-            
- 
-<FeedScreen>:
-    Label:
-        text: "feed"
-    BoxLayout:
-        orentation: "horizontal"
-        size_hint: (1,0.1)
-        Button:
-            text: "profile"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'ProfileScreen'
-                
-        Button:
-            text: "feed"
-            
-        Button:
-            text: "explore"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'ExploreScreen'
-        Button:
-            text: "social"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'SocialScreen'
-        Button:
-            text: "near you"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'NearYouScreen'
-                    
-<ExploreScreen>:
-    Label:
-        text: "Explore"
-    BoxLayout:
-        orentation: "horizontal"
-        size_hint: (1,0.1)
-        Button:
-            text: "profile"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'ProfileScreen'
-                
-        Button:
-            text: "feed"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'FeedScreen'
-        Button:
-            text: "explore"
-            
-        Button:
-            text: "social"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'SocialScreen'
-        Button:
-            text: "near you"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'NearYouScreen'
- 
-<SocialScreen>:
-    Label:
-        text: "Socail"
-    BoxLayout:
-        orentation: "horizontal"
-        size_hint: (1,0.1)
-        Button:
-            text: "profile"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'ProfileScreen'
-                
-        Button:
-            text: "feed"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'FeedScreen'
-        Button:
-            text: "explore"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'ExploreScreen'
-        Button:
-            text: "social"
-            
-        Button:
-            text: "near you"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'NearYouScreen'
-                    
-<NearYouScreen>:
-    Label:
-        text: "Near You"
-    
-    MapView:
-        zoom: 20
-        lat: 32
-        lon: -92
-                    
-    BoxLayout:
-        orentation: "horizontal"
-        size_hint: (1,0.1)
-        Button:
-            text: "profile"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'ProfileScreen'
-                
-        Button:
-            text: "feed"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'FeedScreen'
-        Button:
-            text: "explore"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'ExploreScreen'
-        Button:
-            text: "social"
-            on_press:
-                # You can define the duration of the change
-                # and the direction of the slide
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 1
-                root.manager.current = 'SocialScreen'
-            
-        Button:
-            text: "near you"
-            
- 
-
-""")
 
 # Login Page
 kv = '''
@@ -276,7 +48,7 @@ kv = '''
                 text: 'Log in'
                 size_hint_y: None
                 height: 40
-                on_press:  root.manager.current = 'ProfileScreen'  # Adjust this as needed (homepage)
+                on_press: root.manager.current = 'main'  # Adjust this as needed (homepage)
             Label:
                 text: 'OR'
                 size_hint_y: None
@@ -412,23 +184,6 @@ ForgotPassWord_kv = '''
                 on_press: root.manager.current = 'login'
 
 '''
-class ProfileScreen(Screen):
-    pass
- 
- 
-class FeedScreen(Screen):
-    pass
- 
-class ExploreScreen(Screen):
-    pass
- 
- 
-class SocialScreen(Screen):
-    pass
-
-class NearYouScreen(Screen):
-    pass
-
 class LoginScreen(Screen):
     pass
 
@@ -444,14 +199,7 @@ class MyApp(App):
         sm.add_widget(LoginScreen(name='login'))
         sm.add_widget(SignupScreen(name='signup'))
         sm.add_widget(ForgotPasswordScreen(name='forgot_password_screen'))
-        sm.add_widget(ProfileScreen(name="ProfileScreen"))
-        sm.add_widget(FeedScreen(name="FeedScreen"))
-        sm.add_widget(ExploreScreen(name="ExploreScreen"))
-        sm.add_widget(SocialScreen(name="SocialScreen"))
-        sm.add_widget(NearYouScreen(name="NearYouScreen"))
         return sm
-    
-mobile_base_template.sm
     
 Builder.load_string(kv) # This is the existing kv string for the login screen
 Builder.load_string(signup_kv) # This is the existing kv string for the signUp screen
