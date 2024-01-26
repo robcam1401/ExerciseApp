@@ -6,6 +6,7 @@ create table UserAccount(
     AccountNumber   int(32)     NOT NULL,
     Username        varchar(15) NOT NULL,
     Email           varchar(32) NOT NULL,
+    -- phone number should be 37 bits to account for all 99 billion phone numbers
     PhoneNumber     int(11),
     Fname           varchar(15),
     Minit           varchar(1),
@@ -192,3 +193,12 @@ alter table CommMessages
 alter table Events
     add constraint poster_id_fk
     foreign key (PosterID) references UserAccount(AccountNumber);
+
+
+-- modifications to the initial architecture
+
+alter table UserAccount
+    modify PhoneNumber PhoneNumber int(37);
+
+alter table UserProfile
+    modify PhoneNumber PhoneNumber int(37);

@@ -1,6 +1,11 @@
 import Insert
 import datetime
 
+########################
+# Unit tests for inserting, deleting, and modifying data in the UserAccount database
+
+
+
 
 # connects to the sql server and queries for all account numbers in the UserAccount table
 def ConnectAndQuery():
@@ -18,12 +23,8 @@ def ConnectAndQuery():
 
 # connects to the sql server and inserts into the UserAccount table
 def ConnectAndInsert():
-    cnx,cursor = Insert.connect()
-    add_User = ("INSERT INTO UserAccount "
-              "(AccountNumber, Username, Email, PhoneNumber,Fname,Minit,Lname,UserDoB)"
-              "VALUES (%(AccountNumber)s, %(Username)s, %(Email)s, %(PhoneNumber)s, %(Fname)s, %(Minit)s, %(Lname)s, %(UserDoB)s)")
 
-    data_User = {
+    data_user = {
         "AccountNumber" : 1,
         "Username" : "Admin",
         "Email" : "user@user.com",
@@ -31,16 +32,19 @@ def ConnectAndInsert():
         "Fname" : "Zach",
         "Minit" : "W",
         "Lname" : "Nalepa",
-        "UserDoB" : datetime.date(2001,7,20)
+        "UserDoB" : (2001,7,20)
     }
 
-    cursor.execute(add_User,data_User)
-    cnx.commit()
+    data_Video = {
+        "VideoID" : None,
+        "AccountNumber" : 1,
+        "Video Title" : "First Video",
+        "VidDescription" : "The first video uploaded to our app",
+        "Category" : "dev"
+    }
 
-    cursor.close()
-    cnx.close()
+    Insert.newAccountInsert(data_user)
+    #Insert.newVideoInsert(data_Video, VideoLink, Thumbnail)
     return
-
-
 
 ConnectAndQuery()
