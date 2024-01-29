@@ -12,26 +12,24 @@ create trigger NewUser
     BEGIN
         if (NEW.AccountNumber = '' or NEW.AccountNumber is NULL)
         then
-        set(NEW.AccountNumber = SELECT MAX(AccountNumber) + 1)
+        set NEW.AccountNumber = (SELECT MAX(AccountNumber)
+								from UserAccount) + 1;
         insert into UserProfile
-        values (AccountNumber, NEW.AccountNumber)
+        values (AccountNumber, NEW.AccountNumber);
         insert into UserSettings
-        values (AccountNumber, NEW.AccountNumber)
+        values (AccountNumber, NEW.AccountNumber);
         end if;
-    END$$        
+    END;;              
 
 create trigger NewVideo
     Before insert on Videos
     for each row
     BEGIN
-        if (NEW.VideoID = '' or NEW.VideoID is NULL)
-        then
-        set(NEW.VideoID = SELECT MAX(VideoID) + 1)
-        end if;
         if (NEW.UploadDate is NULL)
-        then(NEW.UploadDate = GETDATE())
+        then 
+        set NEW.UploadDate = NOW();
         end if;
-    END$$
+    END;;
 
 create trigger NewComment
     Before insert on Comments
@@ -42,22 +40,19 @@ create trigger NewComment
         set(NEW.CommentID = SELECT MAX(CommentID) + 1)
         end if;
         if (NEW.PostDate is NULL)
-        then(NEW.PostDate = GETDATE())
+        then(NEW.PostDate = NOW())
         end if;
-    END$$
+    END;;
 
 create trigger NewContent
     Before insert on Content
     for each row
     BEGIN
-        if (NEW.ContentID = '' or NEW.ContentID is NULL)
-        then
-        set(NEW.ContentID = SELECT MAX(ContentID) + 1)
-        end if;
         if (NEW.UploadDate is NULL)
-        then(NEW.UploadDate = GETDATE())
+        then 
+        set NEW.UploadDate = NOW();
         end if;
-    END$$
+    END;;
 
 create trigger NewFriends
     Before insert on Friends
@@ -67,7 +62,7 @@ create trigger NewFriends
         then
         set(NEW.PairID = SELECT MAX(PairID) + 1)
         end if;
-    END$$
+    END;;
 
 create trigger NewMessages
     Before insert on FriendMessages
@@ -78,9 +73,9 @@ create trigger NewMessages
         set(NEW.MessageID = SELECT MAX(MessageID) + 1)
         end if;
         if (NEW.SentStamp is NULL)
-        then(NEW.SentStamp = GETDATE())
+        then(NEW.SentStamp = NOW())
         end if;
-    END$$
+    END;;
 
 create trigger NewCommunity
     Before insert on Communities
@@ -101,7 +96,7 @@ create trigger NewCommMessage
         set(NEW.MessageID = SELECT MAX(MessageID) + 1)
         end if;
         if (NEW.SentStamp is NULL)
-        then(NEW.SentStamp = GETDATE())
+        then(NEW.SentStamp = NOW())
         end if;
     END$$
 
@@ -114,7 +109,7 @@ create trigger NewEvent
         set(NEW.EventID = SELECT MAX(EventID) + 1)
         end if;
         if (NEW.PostTime is NULL)
-        then(NEW.PostTime = GETDATE())
+        then(NEW.PostTime = NOW())
         end if;
     END$$
 

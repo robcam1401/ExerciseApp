@@ -11,8 +11,9 @@ import datetime
 def ConnectAndQuery():
     cnx,cursor = Insert.connect()
 
-    query=("SELECT AccountNumber FROM UserAccount")
-    cursor.execute(query)
+    query1=("SELECT AccountNumber FROM UserAccount")
+    query2=("SELECT VideoLink FROM Videos WHERE VideoID = 1")
+    cursor.execute(query2)
 
     for (number) in cursor:
         print(number)
