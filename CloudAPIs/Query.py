@@ -13,6 +13,16 @@ def account_info(acct_num):
     cnx.close()
     return cursor
 
+def account_search_name(search_term):
+    cnx,cursor = connect()
+
+    query = ("SELECT * FROM UserAccount\
+             WHERE Username = {}").format(search_term)
+    cursor.execute(query)
+    cnx.commit()
+    cnx.close()
+    return cursor
+
 # returns all videos posted by a single account
 # ordered by date, descending or ascending, chosen by calling function
 def account_videos_date(acct_num, sort):
@@ -34,6 +44,16 @@ def account_content_date(acct_num, sort):
              WHERE AccountNumber = {}\
              ORDER BY UploadDate{}").format(acct_num, sort)
 
+    cursor.execute(query)
+    cnx.commit()
+    cnx.close()
+    return cursor
+
+def video_search_name(search_term):
+    cnx, cursor = connect()
+
+    query = ("SELECT * FROM Videos\
+             WHERE VideoTitle = {}").format(search_term)
     cursor.execute(query)
     cnx.commit()
     cnx.close()

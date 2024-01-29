@@ -4,6 +4,37 @@ from Query import *
 ## start with the insert functions
 class insert():
 
+    # the account number will be automatically assigned on insertion
+    user_info_template = {
+        "AccountNumber" : None,
+        "Username" : 'str',
+        "Email" : 'str',
+        "PhoneNumber" : 'int',
+        "Fname" : "str",
+        "Minit" : "char",
+        "Lname" : 'str',
+        "UserDoB" : 'yyyy-mm-dd'
+    }
+
+    # VideoLink, Thumbnail, UploadDate are automatically assigned on insert
+    video_info_template = {
+        "VideoID" : None,
+        "AccountNumber" : 'int',
+        "Video Title" : 'str',
+        "VidDescription" : 'str',
+        "Category" : "dev",
+        "Views" : 0
+    }
+
+    # SentStamp, AttatchedLink are automatically assigned on insert
+    message_info_template = {
+        "PairID" : 'int',
+        "MessageID" : 'int',
+        "MessageBody" : 'str',
+        "SentStamp" : None,
+        "SentUser" : 'int',
+    }
+
     def new_user(user_info):
         newAccountInsert(user_info)
         return
@@ -93,8 +124,9 @@ class query():
 ## edit functions, for editable tables and columns
     
 class edit():
-    def e1():
-        pass
+    def video_title():
+
+        return 
 
 ## delete functions for deleteable tables and columns
 

@@ -1,11 +1,12 @@
 import mysql.connector
 import datetime
+from authenticator import acct_auth, create_token
 
 #######################################################
-# This insert file and the other modify and delete file
+# This insert file and the other modify and delete files
 # are intended to run on an authenticator server instead of a user device
 # The users will send their information to the server, which will interface
-# with the sql server in theri place. For now, this file will
+# with the sql server in their place. For now, this file will
 # run on the test devices and will eventually move to the server.
 #######################################################
 # This file uses the mysql connector library v9 for python 3.12, to install:
@@ -74,10 +75,16 @@ def newAccountInsert(AccInfo):
 
     cursor.close()
     cnx.close()
+
+    # create a new token for the new user on their device
+    #logon_token = create_token(AccInfo['AccountNumber'])
+    #return logon_token
     return
 
 # Insert a new video with given video information and a video and thumbnail file
 def newVideoInsert(VideoInfo, VideoLink, Thumbnail):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
 
     cnx,cursor = connect()
     VideoInfo['VideoID'] = getLastID('Videos','VideoID') + 1
@@ -94,6 +101,8 @@ def newVideoInsert(VideoInfo, VideoLink, Thumbnail):
     return
 
 def newCommentInsertVideo(CommentInfo):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
     CommentInfo['CommentID'] = getLastID('Comments','CommentID') + 1
     add_comment = ("INSERT INTO Comments "
@@ -107,6 +116,8 @@ def newCommentInsertVideo(CommentInfo):
     cnx.close()
     return
 def newCommentInsertContent(CommentInfo):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
     CommentInfo['CommentID'] = getLastID('Comments','CommentID') + 1
     add_comment = ("INSERT INTO Comments "
@@ -121,6 +132,8 @@ def newCommentInsertContent(CommentInfo):
     return
 
 def newContentInsert(ContentInfo):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
     ContentInfo['ContentID'] = getLastID('Content','ContentID') + 1
     add_content = ("INSERT INTO Content "
@@ -133,6 +146,8 @@ def newContentInsert(ContentInfo):
     pass
 
 def newContentInsert(ContentInfo,Link):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
 
 
@@ -141,6 +156,8 @@ def newContentInsert(ContentInfo,Link):
     pass
 
 def newFriendsInsert(FriendInfo):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
 
 
@@ -149,6 +166,8 @@ def newFriendsInsert(FriendInfo):
     pass
 
 def newFriendMessages(MessageInfo):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
 
 
@@ -157,6 +176,8 @@ def newFriendMessages(MessageInfo):
     pass
 
 def newFriendMessages(MessageInfo,Link):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
 
 
@@ -165,6 +186,8 @@ def newFriendMessages(MessageInfo,Link):
     pass
 
 def newCommunityInsert(CommInfo):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
 
 
@@ -173,6 +196,8 @@ def newCommunityInsert(CommInfo):
     pass
 
 def newCommMessages(MessageInfo):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
 
 
@@ -181,6 +206,8 @@ def newCommMessages(MessageInfo):
     pass
 
 def newCommMessages(MessageInfo,Link):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
 
 
@@ -189,6 +216,8 @@ def newCommMessages(MessageInfo,Link):
     pass
 
 def newEvent(EventInfo):
+    # authenticate the user instance
+    #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
 
 

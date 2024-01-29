@@ -36,6 +36,13 @@ create table UserSettings(
     primary key (AccountNumber)
 );
 
+create table UserAuth(
+    AccountNumber   int(32)     NOT NULL,
+    Token           text(32)    NOT NULL,
+    constraint Auth_pk
+    primary key (AccountNumber)
+)
+
 create table Videos(
     VideoID         int(32)     NOT NULL,
     VideoLink       text(255)   NOT NULL,
@@ -141,6 +148,11 @@ alter table UserProfile
     -- Keys connect UserSettings(AccountNumber) to UserAccount(AccountNumber)
 alter table UserSettings
     add constraint settings_fk
+    foreign key (AccountNumber) references UserAccount(AccountNumber);
+
+    -- keys connect UserAuth(AccountNumber) to UserAccount(AccountNumber)
+alter table AccountAuth
+    add constraint auth_fk
     foreign key (AccountNumber) references UserAccount(AccountNumber);
 
     -- Keys connect Comments(AccountNumber) to UserAccount(AccountNumber)
