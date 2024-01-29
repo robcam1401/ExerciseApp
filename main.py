@@ -12,6 +12,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from kivy.uix.tabbedpanel import TabbedPanel
+#from signup import send_verification_email, generate_verification_code, sign_up_user
 
 # Login Page
 kv = '''
@@ -115,6 +116,7 @@ signup_kv = '''
                 size: self.texture_size
                 pos_hint: {'center_x': 0.5, 'y': 0.6}
             TextInput:
+                #id: email_input
                 hint_text: 'Phone number or Email'
                 size_hint_y: None
                 height: 40
@@ -130,6 +132,7 @@ signup_kv = '''
                 height: 40
                 multiline: False
             TextInput:
+                #id: password_input
                 hint_text: 'Password'
                 size_hint_y: None
                 height: 40
@@ -556,6 +559,11 @@ class LoginScreen(Screen):
     pass
 
 class SignupScreen(Screen):
+    #def sign_up(self): 
+        #user_email = self.ids.email_input.text
+        #user_password = self.ids.password_input.text
+         #calling sign-up function from signup.py
+         #sign_up_user(user_email, user_password)
     pass
 
 class ForgotPasswordScreen(Screen):
