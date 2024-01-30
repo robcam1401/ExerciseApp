@@ -1,4 +1,4 @@
-import Insert
+from Insert import *
 import datetime
 
 ########################
@@ -9,14 +9,15 @@ import datetime
 
 # connects to the sql server and queries for all account numbers in the UserAccount table
 def ConnectAndQuery():
-    cnx,cursor = Insert.connect()
+    cnx,cursor = connect()
 
     query1=("SELECT AccountNumber FROM UserAccount")
     query2=("SELECT VideoLink FROM Videos WHERE VideoID = 1")
-    cursor.execute(query2)
+    query3=("SELECT * FROM Friends")
+    cursor.execute(query3)
 
-    for (number) in cursor:
-        print(number)
+    for item in cursor:
+        print(item)
 
     cursor.close()
     cnx.close()
@@ -33,7 +34,17 @@ def ConnectAndInsert():
         "Fname" : "Zach",
         "Minit" : "W",
         "Lname" : "Nalepa",
-        "UserDoB" : (2001,7,20)
+        "UserDoB" : datetime.date(2001,7,20)
+    }
+    data_user1 = {
+        "AccountNumber" : 2,
+        "Username" : "GenericUser",
+        "Email" : "user2@user.com",
+        "PhoneNumber" : 1111111111,
+        "Fname" : "Generic",
+        "Minit" : "A",
+        "Lname" : "User",
+        "UserDoB" : datetime.date(2000,1,1)
     }
 
     data_Video = {
@@ -44,8 +55,15 @@ def ConnectAndInsert():
         "Category" : "dev"
     }
 
-    Insert.newAccountInsert(data_user)
+    data_friends = {
+        "User1ID" : 1,
+        "User2ID" : 2,
+        "PairID" : 1
+    }
+
+    #newAccountInsert(data_user1)
+    newFriendsInsert(data_friends)
     #Insert.newVideoInsert(data_Video, VideoLink, Thumbnail)
     return
 
-ConnectAndQuery()
+ConnectAndInsert()

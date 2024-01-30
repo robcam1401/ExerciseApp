@@ -5,6 +5,7 @@ use ExerciseApp;
 create table UserAccount(
     AccountNumber   int(32)     NOT NULL,
     Username        varchar(15) NOT NULL,
+    PasswordHash    varchar(32) NOT NULL,
     Email           varchar(32) NOT NULL,
     -- phone number should be 37 bits to account for all 99 billion phone numbers
     PhoneNumber     int(37),
@@ -41,6 +42,8 @@ create table UserAuth(
     Token           text(32)    NOT NULL,
     constraint Auth_pk
     primary key (AccountNumber)
+    constraint token_unique
+    unique (Token)
 )
 
 create table Videos(
@@ -81,12 +84,23 @@ create table Content(
     primary key (ContentID)
 );
 
+-- user1 is the numberically lower user id
 create table Friends(
     User1ID         int(32)     NOT NULL,
     User2ID         int(32)     NOT NULL,
     PairID          int(32)     NOT NULL,
     constraint Friends_pk
     primary key (PairID)
+);
+
+create table FriendRequest(
+    RequestID       int(32)     NOT NULL,
+    User1ID         int(32)     NOT NULL,
+    User2ID         int(32)     NOT NULL,
+    User1Accepted   boolean     NOT NULL,
+    User2Accepted   boolean     NOT NULL
+    constraint Request_pk
+    primary key (RequestID)
 );
 
 create table FriendMessages(
@@ -214,3 +228,6 @@ alter table UserAccount
 
 alter table UserProfile
     modify PhoneNumber PhoneNumber int(37);
+
+alter table UserAccount
+    add PasswordHash text();

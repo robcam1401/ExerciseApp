@@ -1,6 +1,6 @@
 import mysql.connector
 import datetime
-from authenticator import acct_auth, create_token
+#from authenticator import acct_auth, create_token
 
 #######################################################
 # This insert file and the other modify and delete files
@@ -28,11 +28,11 @@ def getLastID(table : str, identifier):
                 FROM {}\
                 ORDER BY {} DESC LIMIT 1').format(identifier,table,identifier)
     cursor.execute(last_row)
-
+    lr = int((cursor.fetchone())[0])
     cursor.close()
     cnx.close()
 
-    return int(cursor.__str__())
+    return lr
 
 ## Type Checking
 
@@ -51,10 +51,10 @@ def newAccountTypeCheck(AccInfo):
         raise "Middle Initial too long"
     if len(AccInfo['Lname']) > 15:
         raise "Last name too long"
-    try: 
-        AccInfo['UserDoB'] = datetime.date(AccInfo['UserDoB'])
-    except:
-        raise "Invalid Date of Birth"
+    # try: 
+    #     AccInfo['UserDoB'] = datetime.date(AccInfo['UserDoB'])
+    # except:
+    #     raise "Invalid Date of Birth"
     return
 
 ## Insert Methods
@@ -66,6 +66,8 @@ def newAccountInsert(AccInfo):
 
     cnx,cursor = connect()
     AccInfo['AccountNumber'] = getLastID('UserAccount','AccountNumber') + 1
+    for item in AccInfo:
+        print("{} {}".format(item, type(AccInfo[item])))
     add_User = ("INSERT INTO UserAccount "
               "(AccountNumber, Username, Email, PhoneNumber,Fname,Minit,Lname,UserDoB)"
               "VALUES (%(AccountNumber)s, %(Username)s, %(Email)s, %(PhoneNumber)s, %(Fname)s, %(Minit)s, %(Lname)s, %(UserDoB)s)")
@@ -160,6 +162,12 @@ def newFriendsInsert(FriendInfo):
     #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
 
+    FriendInfo['PairID'] = getLastID('Friends','PairID') + 1
+    add_content = ("INSERT INTO Friends "
+              "(User1ID, User2ID, PairID)"
+              "VALUES (%(User1ID)s, %(User2ID)s, %(PairID)s)")
+    cursor.execute(add_content,FriendInfo)
+    cnx.commit()
 
     cursor.close()
     cnx.close()

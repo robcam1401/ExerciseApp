@@ -35,6 +35,12 @@ class insert():
         "SentUser" : 'int',
     }
 
+    friend_info_template = {
+        "PairID" : None,
+        "User1ID" : 'int',
+        "User2ID" : 'int'
+    }
+
     def new_user(user_info):
         newAccountInsert(user_info)
         return
@@ -43,11 +49,11 @@ class insert():
         newVideoInsert(video_info)
         return
 
-    def new_content_comment(message_info):
-        newCommentInsertContent(message_info)
+    def new_content_comment(comment_info):
+        newCommentInsertContent(comment_info)
         return
-    def new_video_comment(message_info):
-        newCommentInsertVideo(message_info)
+    def new_video_comment(comment_info):
+        newCommentInsertVideo(comment_info)
         return
 
     def new_content(content_info):
@@ -85,40 +91,48 @@ class insert():
 ## query functions
 class query():
 
-    def accountInfo(account_number):
-        cursor = account_info(account_number)
+    # given an account number, returns the row containing the account number
+    def account_info(account_number):
+        cursor = accountInfo(account_number)
         return cursor
 
+    # given an account number, returns a table containing all videos by the specified account
+    # ordered descending and ascending by date
     def account_videos_date_desc(account_number):
-        cursor = account_videos_date(account_number, " DESC")
+        cursor = accountVideosDate(account_number, " DESC")
         return cursor
     def account_videos_date_asc(account_number):
-        cursor = account_videos_date(account_number, "")
+        cursor = accountVideosDate(account_number, "")
         return cursor
     
+    # given an account number, returns a table containing all content by the specified account
+    # ordered descending and ascending by date
     def account_content_date_desc(account_number):
-        cursor = account_content_date(account_number, " DESC")
+        cursor = accountContentDate(account_number, " DESC")
         return cursor
     def account_content_date_asc(account_number):
-        cursor = account_content_date(account_number, "")
+        cursor = accountContentDate(account_number, "")
         return cursor
     
+    # given a video/content id, returns a table containing all top-level comments on the specified video/content
+    # ordered descending and ascending by date
+    # 1 specifies videos for the server-level api, 0 specifies content
     def video_comments_asc(videoid):
-        cursor = comments_under_post(videoid, "")
+        cursor = commentsUnderPost(videoid, "",1)
         return cursor
     def video_comments_desc(videoid):
-        cursor = comments_under_post(videoid," DESC")
+        cursor = commentsUnderPost(videoid," DESC",1)
         return cursor
 
     def content_comments_asc(contentid):
-        cursor = comments_under_post(contentid, "")
+        cursor = commentsUnderPost(contentid, "",0)
         return cursor
     def content_comments_desc(contentid):
-        cursor = comments_under_post(contentid, " DESC")
+        cursor = commentsUnderPost(contentid, " DESC",0)
         return cursor
     
     def commentBody(videoid):
-        cursor = comment_body(videoid)
+        cursor = commentBody(videoid)
         return cursor
 
 ## edit functions, for editable tables and columns

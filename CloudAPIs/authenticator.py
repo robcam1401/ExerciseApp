@@ -1,5 +1,6 @@
 from Insert import connect
 from secrets import token_hex
+from zachhash import zachhash
 
 # should be called once when starting up the app, and during priveleged actions (uploading,deleting)
 def acct_auth(acct_id,token):
@@ -34,3 +35,5 @@ def create_token(acct_id):
     cnx.close()
     return new_token
 
+def password_auth(pw):
+    return zachhash(pw)
