@@ -14,6 +14,9 @@ from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 from kivy.uix.tabbedpanel import TabbedPanel
 from kivymd.uix.list import MDListItem,MDListItemHeadlineText
 from kivymd.app import MDApp
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.scrollview import ScrollView
+
 
 
 
@@ -47,10 +50,22 @@ class ForgotPasswordScreen(Screen):
     pass
 
 class FriendsScreen(Screen):
-    pass
+    root = ScrollView(size_hint=(1,None),size=(BoxLayout.width,BoxLayout.height))
+    def create_friend(self):
+        self.btn = Button(text="button", size_hint_y=None,height=20,on_press=self.press_friend)
+        self.ids.grid_friend.add_widget(self.btn)
+
+    def press_friend(self,instance):
+        print("friends messages")
 
 class GroupsScreen(Screen):
-    pass
+    root = ScrollView(size_hint=(1,None),size=(BoxLayout.width,BoxLayout.height))
+    def create_group(self):
+        self.btn = Button(text="button", size_hint_y=None,height=20,on_press=self.press_group)
+        self.ids.grid_group.add_widget(self.btn)
+
+    def press_group(self,instance):
+        print("group messages")
 
 class MessagesScreen(Screen):
     pass
