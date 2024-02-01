@@ -5,8 +5,10 @@ use ExerciseApp;
 create table UserAccount(
     AccountNumber   int(32)     NOT NULL,
     Username        varchar(15) NOT NULL,
+    PasswordHash    varchar(32) NOT NULL,
     Email           varchar(32) NOT NULL,
-    PhoneNumber     int(11),
+    -- phone number should be 37 bits to account for all 99 billion phone numbers
+    PhoneNumber     int(37),
     Fname           varchar(15),
     Minit           varchar(1),
     Lname           varchar(15),
@@ -35,6 +37,15 @@ create table UserSettings(
     primary key (AccountNumber)
 );
 
+create table UserAuth(
+    AccountNumber   int(32)     NOT NULL,
+    Token           text(32)    NOT NULL,
+    constraint Auth_pk
+    primary key (AccountNumber),
+    constraint token_unique
+    unique (Token)
+);
+
 create table Videos(
     VideoID         int(32)     NOT NULL,
     VideoLink       text(255)   NOT NULL,
@@ -56,7 +67,7 @@ create table Comments(
     PostDate        datetime    NOT NULL,
     VideoComment    int(32),    -- used if comment posted under video
     ContentComment  int(32),    -- used if comment posted under content
-    ThreadParent    int(32)     NOT NULL, /*Parent Comment ID*/
+    ThreadParent    int(32)     NOT NULL, #Parent Comment ID, 0 indicates top-level comment
     Edited          boolean     default false,
     constraint Comment_pk
     primary key (CommentID)
@@ -73,12 +84,23 @@ create table Content(
     primary key (ContentID)
 );
 
+-- user1 is the numberically lower user id
 create table Friends(
     User1ID         int(32)     NOT NULL,
     User2ID         int(32)     NOT NULL,
     PairID          int(32)     NOT NULL,
     constraint Friends_pk
     primary key (PairID)
+);
+
+create table FriendRequest(
+    RequestID       int(32)     NOT NULL,
+    User1ID         int(32)     NOT NULL,
+    User2ID         int(32)     NOT NULL,
+    User1Accepted   boolean     NOT NULL,
+    User2Accepted   boolean     NOT NULL,
+    constraint Request_pk
+    primary key (RequestID)
 );
 
 create table FriendMessages(
@@ -142,6 +164,11 @@ alter table UserSettings
     add constraint settings_fk
     foreign key (AccountNumber) references UserAccount(AccountNumber);
 
+    -- keys connect UserAuth(AccountNumber) to UserAccount(AccountNumber)
+alter table AccountAuth
+    add constraint auth_fk
+    foreign key (AccountNumber) references UserAccount(AccountNumber);
+
     -- Keys connect Comments(AccountNumber) to UserAccount(AccountNumber)
     --              Comments(VideoComment) to Video(VideoID)
     --              Comments(ContentComment) to Content(ContentID)
@@ -192,3 +219,15 @@ alter table CommMessages
 alter table Events
     add constraint poster_id_fk
     foreign key (PosterID) references UserAccount(AccountNumber);
+
+
+-- modifications to the initial architecture
+
+alter table UserAccount
+    modify PhoneNumber int(37);
+
+alter table UserProfile
+    modify PhoneNumber int(37);
+
+alter table UserAccount
+    add PasswordHash text(32);
