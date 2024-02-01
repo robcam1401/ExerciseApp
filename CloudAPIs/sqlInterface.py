@@ -1,5 +1,6 @@
 from Insert import *
 from Query import *
+from Edit import *
 
 ## start with the insert functions
 class insert():
@@ -13,23 +14,38 @@ class insert():
         "Fname" : "str",
         "Minit" : "char",
         "Lname" : 'str',
-        "UserDoB" : 'yyyy-mm-dd'
+        "UserDoB" : 'yyyy-mm-dd',
+        "PasswordHash" : 'str'
     }
 
     # VideoLink, Thumbnail, UploadDate are automatically assigned on insert
     video_info_template = {
         "VideoID" : None,
+        "VideoLink" : None,
         "AccountNumber" : 'int',
-        "Video Title" : 'str',
+        "VideoTitle" : 'str',
         "VidDescription" : 'str',
         "Category" : "dev",
-        "Views" : 0
+        "Views" : 0,
+        "UploadDate" : None,
+        "Thumbnail" : None
+    }
+
+    comment_info_template = {
+        "CommentID" : None,
+        "AccountNumber" : 'int',
+        "CommentBody" : 'str',
+        "PostDate" : None,
+        "VideoComment" : 'int',
+        "ContentComment" : 'int',
+        "ThreadParent" : 'int',
+        "Edited" : False
     }
 
     # SentStamp, AttatchedLink are automatically assigned on insert
     message_info_template = {
         "PairID" : 'int',
-        "MessageID" : 'int',
+        "MessageID" : None,
         "MessageBody" : 'str',
         "SentStamp" : None,
         "SentUser" : 'int',
@@ -39,6 +55,50 @@ class insert():
         "PairID" : None,
         "User1ID" : 'int',
         "User2ID" : 'int'
+    }
+
+    friend_request_info_template = {
+        "RequestID" : None,
+        "User1ID" : 'int',
+        "User2ID" : 'int',
+        "User1Accepted" : 'bool',
+        "User2Accepted" : 'bool'
+    }
+
+    message_info_template = {
+        "PairID" : 'int',
+        "MessageID" : None,
+        "MessageBody" : 'str',
+        "SentStamp" : None,
+        "SentUser" : 'int',
+        "AttatchedLink" : None
+    }
+
+    community_info_template = {
+        "CommunityID" : None,
+        "CommName" : 'str',
+        "CommDescription" : 'str',
+        "CreatedUser" : 'int'
+    }
+
+    community_messages_info_template = {
+        "CommunityID" : 'int',
+        "MessageID" : None,
+        "MessageBody" : 'str',
+        "AttatchedLink" : 'str',
+        "SentStamp" : None,
+        "SentUser" : 'int'
+    }
+
+    events_info_template = {
+        "EventID" : None,
+        "EventName" : 'str',
+        "EventDesc" : 'str',
+        "PostTime" : None,
+        "StartTime" : 'datetime',
+        "EventLocation" : 'str',
+        "PosterID" : 'int',
+        "Category" : 'str'
     }
 
     def new_user(user_info):
@@ -68,7 +128,7 @@ class insert():
         newFriendMessages(message_info)
         return
 
-    def new_message(message_info,link):
+    def new_message_link(message_info,link):
         newFriendMessages(message_info,link)
         return
 
@@ -105,6 +165,11 @@ class query():
         cursor = accountVideosDate(account_number, "")
         return cursor
     
+    # given a search term, returns a cursor containing the video(s)
+    def search_videos_name(search_term):
+        cursor = videoSearchName(search_term)
+        return cursor
+
     # given an account number, returns a table containing all content by the specified account
     # ordered descending and ascending by date
     def account_content_date_desc(account_number):
@@ -113,6 +178,10 @@ class query():
     def account_content_date_asc(account_number):
         cursor = accountContentDate(account_number, "")
         return cursor
+    
+    def friend_messages_date(pair_id):
+        cnx,cursor = friendPairMessages(pair_id)
+        return cnx,cursor
     
     # given a video/content id, returns a table containing all top-level comments on the specified video/content
     # ordered descending and ascending by date
@@ -131,16 +200,27 @@ class query():
         cursor = commentsUnderPost(contentid, " DESC",0)
         return cursor
     
-    def commentBody(videoid):
-        cursor = commentBody(videoid)
+    def comment_body(commentid):
+        cursor = commentBody(commentid)
         return cursor
 
 ## edit functions, for editable tables and columns
     
 class edit():
-    def video_title():
-
+    def video_title(videoid,newtitle):
+        videoTitle(videoid,newtitle)
         return 
+    def video_description(videoid,newdescription):
+        videoDescription(videoid,newdescription)
+        return
+    
+    def comment_body(commentid,newbody):
+        commentBody(commentid,newbody)
+        return
+    
+    def content_body(contentid,newbody):
+        contentBody(contentid,newbody)
+        return
 
 ## delete functions for deleteable tables and columns
 

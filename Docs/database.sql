@@ -41,10 +41,10 @@ create table UserAuth(
     AccountNumber   int(32)     NOT NULL,
     Token           text(32)    NOT NULL,
     constraint Auth_pk
-    primary key (AccountNumber)
+    primary key (AccountNumber),
     constraint token_unique
     unique (Token)
-)
+);
 
 create table Videos(
     VideoID         int(32)     NOT NULL,
@@ -67,7 +67,7 @@ create table Comments(
     PostDate        datetime    NOT NULL,
     VideoComment    int(32),    -- used if comment posted under video
     ContentComment  int(32),    -- used if comment posted under content
-    ThreadParent    int(32)     NOT NULL, --Parent Comment ID, 0 indicates top-level comment
+    ThreadParent    int(32)     NOT NULL, #Parent Comment ID, 0 indicates top-level comment
     Edited          boolean     default false,
     constraint Comment_pk
     primary key (CommentID)
@@ -98,7 +98,7 @@ create table FriendRequest(
     User1ID         int(32)     NOT NULL,
     User2ID         int(32)     NOT NULL,
     User1Accepted   boolean     NOT NULL,
-    User2Accepted   boolean     NOT NULL
+    User2Accepted   boolean     NOT NULL,
     constraint Request_pk
     primary key (RequestID)
 );
@@ -224,10 +224,10 @@ alter table Events
 -- modifications to the initial architecture
 
 alter table UserAccount
-    modify PhoneNumber PhoneNumber int(37);
+    modify PhoneNumber int(37);
 
 alter table UserProfile
-    modify PhoneNumber PhoneNumber int(37);
+    modify PhoneNumber int(37);
 
 alter table UserAccount
-    add PasswordHash text();
+    add PasswordHash text(32);

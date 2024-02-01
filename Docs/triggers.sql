@@ -1,116 +1,79 @@
-USE ExerciseApp
+USE ExerciseApp;
 
 /* Each table has a key identifier that will count up from the first post
 Additionally, a new row in UserProfile and UserSettings will be created
 */
 
-DELIMITER $$
 
+drop trigger if exists `NewUser`;
+DELIMITER ;;
 create trigger NewUser
     Before insert on UserAccount
     for each row
     BEGIN
-        if (NEW.AccountNumber = '' or NEW.AccountNumber is NULL)
-        then
-        set NEW.AccountNumber = (SELECT MAX(AccountNumber)
-								from UserAccount) + 1;
         insert into UserProfile
         values (AccountNumber, NEW.AccountNumber);
         insert into UserSettings
         values (AccountNumber, NEW.AccountNumber);
-        end if;
-    END;;              
+    END;;
+DELIMITER ;
 
+drop trigger if exists `NewVideo`;
+DELIMITER ;;
 create trigger NewVideo
     Before insert on Videos
     for each row
     BEGIN
-        if (NEW.UploadDate is NULL)
-        then 
-        set NEW.UploadDate = NOW();
-        end if;
+        set NEW.UploadDate = GETDATE();
     END;;
+DELIMITER ;
 
+drop trigger if exists `NewComment`;
+DELIMITER ;;
 create trigger NewComment
     Before insert on Comments
     for each row
     BEGIN
-        if (NEW.CommentID = '' or NEW.CommentID is NULL)
-        then
-        set(NEW.CommentID = SELECT MAX(CommentID) + 1)
-        end if;
-        if (NEW.PostDate is NULL)
-        then(NEW.PostDate = NOW())
-        end if;
+        set NEW.PostDate = GETDATE();
     END;;
+DELIMITER ;
 
+drop trigger if exists `NewContent`;
+DELIMITER ;;
 create trigger NewContent
     Before insert on Content
     for each row
     BEGIN
-        if (NEW.UploadDate is NULL)
-        then 
-        set NEW.UploadDate = NOW();
-        end if;
+        set NEW.UploadDate = GETDATE();
     END;;
+DELIMITER ;
 
-create trigger NewFriends
-    Before insert on Friends
-    for each row
-    BEGIN
-        if (NEW.PairID = '' or NEW.PairID is NULL)
-        then
-        set(NEW.PairID = SELECT MAX(PairID) + 1)
-        end if;
-    END;;
-
+drop trigger if exists `NewMessages`;
+DELIMITER ;;
 create trigger NewMessages
     Before insert on FriendMessages
     for each row
     BEGIN
-        if (NEW.MessageID = '' or NEW.MessageID is NULL)
-        then
-        set(NEW.MessageID = SELECT MAX(MessageID) + 1)
-        end if;
-        if (NEW.SentStamp is NULL)
-        then(NEW.SentStamp = NOW())
-        end if;
+        set NEW.SentStamp = GETDATE();
     END;;
+DELIMITER ;
 
-create trigger NewCommunity
-    Before insert on Communities
-    for each row
-    BEGIN
-        if (NEW.CommunityID = '' or NEW.CommunityID is NULL)
-        then
-        set(NEW.CommunityID = SELECT MAX(CommunityID) + 1)
-        end if;
-    END$$
-
+drop trigger if exists `NewCommMessage`;
+DELIMITER ;;
 create trigger NewCommMessage
     Before insert on CommMessages
     for each row
     BEGIN
-        if (NEW.MessageID = '' or NEW.MessageID is NULL)
-        then
-        set(NEW.MessageID = SELECT MAX(MessageID) + 1)
-        end if;
-        if (NEW.SentStamp is NULL)
-        then(NEW.SentStamp = NOW())
-        end if;
-    END$$
+        set NEW.SentStamp = GETDATE();
+    END;;
+DELIMITER ;
 
+drop trigger if exists `NewEvent`;
+DELIMITER ;;
 create trigger NewEvent
     Before insert on Events
     for each row
     BEGIN
-        if (NEW.EventID = '' or NEW.EventID is NULL)
-        then
-        set(NEW.EventID = SELECT MAX(EventID) + 1)
-        end if;
-        if (NEW.PostTime is NULL)
-        then(NEW.PostTime = NOW())
-        end if;
-    END$$
-
+        set NEW.PostTime = GETDATE();
+    END;;
 DELIMITER ;

@@ -1,5 +1,6 @@
 import mysql.connector
 import datetime
+from zachhash import zachhash
 #from authenticator import acct_auth, create_token
 
 #######################################################
@@ -17,7 +18,7 @@ import datetime
 
 def connect():
     cnx = mysql.connector.connect(user='GenericUser',host='34.121.87.64',database='ExerciseApp')
-    cursor = cnx.cursor()
+    cursor = cnx.cursor(buffered=True)
     return cnx,cursor
 
 def getLastID(table : str, identifier):
@@ -66,14 +67,14 @@ def newAccountInsert(AccInfo):
 
     cnx,cursor = connect()
     AccInfo['AccountNumber'] = getLastID('UserAccount','AccountNumber') + 1
-    for item in AccInfo:
-        print("{} {}".format(item, type(AccInfo[item])))
+    #AccInfo['PasswordHash'] = zachhash(AccInfo['PasswordHash'])
+    # for item in AccInfo:
+    #     print("{} {}".format(item, (AccInfo[item])))
     add_User = ("INSERT INTO UserAccount "
-              "(AccountNumber, Username, Email, PhoneNumber,Fname,Minit,Lname,UserDoB)"
-              "VALUES (%(AccountNumber)s, %(Username)s, %(Email)s, %(PhoneNumber)s, %(Fname)s, %(Minit)s, %(Lname)s, %(UserDoB)s)")
+              "(AccountNumber, Username, Email, PhoneNumber,Fname,Minit,Lname,UserDoB,PasswordHash)"
+              "VALUES (%(AccountNumber)s, %(Username)s, %(Email)s, %(PhoneNumber)s, %(Fname)s, %(Minit)s, %(Lname)s, %(UserDoB)s,%(PasswordHash)s)")
     cursor.execute(add_User,AccInfo)
     cnx.commit()
-
 
     cursor.close()
     cnx.close()
@@ -145,7 +146,7 @@ def newContentInsert(ContentInfo):
 
     cursor.close()
     cnx.close()
-    pass
+    return
 
 def newContentInsert(ContentInfo,Link):
     # authenticate the user instance
@@ -155,7 +156,7 @@ def newContentInsert(ContentInfo,Link):
 
     cursor.close()
     cnx.close()
-    pass
+    return
 
 def newFriendsInsert(FriendInfo):
     # authenticate the user instance
@@ -171,19 +172,24 @@ def newFriendsInsert(FriendInfo):
 
     cursor.close()
     cnx.close()
-    pass
+    return
 
 def newFriendMessages(MessageInfo):
     # authenticate the user instance
     #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
-
+    #MessageInfo['MessageID'] = getLastID('FriendMessages','MessageID')
+    add_message = ("INSERT INTO FriendMessages "
+              "(PairID, MessageID, MessageBody, SentStamp, SentUser, AttatchedLink)"
+              "VALUES (%(PairID)s, %(MessageID)s, %(MessageBody)s, %(SentStamp)s,%(SentUser)s,%(AttatchedLink)s)")
+    cursor.execute(add_message,MessageInfo)
+    cnx.commit()
 
     cursor.close()
     cnx.close()
-    pass
+    return
 
-def newFriendMessages(MessageInfo,Link):
+def newFriendMessagesLink(MessageInfo,Link):
     # authenticate the user instance
     #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
@@ -191,27 +197,37 @@ def newFriendMessages(MessageInfo,Link):
 
     cursor.close()
     cnx.close()
-    pass
+    return
 
 def newCommunityInsert(CommInfo):
     # authenticate the user instance
     #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
-
+    CommInfo['CommunityID'] = getLastID('Communities', 'CommunityID')
+    add_community = ("INSERT INTO Communities "
+              "(CommunityID, CommName, CommDescription, CreatedUser)"
+              "VALUES (%(CommunityID)s, %(CommName)s, %(CommDescription)s, %(CreatedUser)s)")
+    cursor.execute(add_community,CommInfo)
+    cnx.commit()
 
     cursor.close()
     cnx.close()
-    pass
+    return
 
 def newCommMessages(MessageInfo):
     # authenticate the user instance
     #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
-
+    MessageInfo['MessageID'] = getLastID('CommMessages','MessageID')
+    add_message = ("INSERT INTO CommMessages "
+              "(CommunityID, MessageID, MessageBody, AttatchedLink, SentStamp, SentUser)"
+              "VALUES (%(CommunityID)s, %(MessageID)s, %(MessageBody)s, %(AttatchedLink)s,%(SentStamp)s,%(SentUser)s)")
+    cursor.execute(add_message,MessageInfo)
+    cnx.commit()
 
     cursor.close()
     cnx.close()
-    pass
+    return
 
 def newCommMessages(MessageInfo,Link):
     # authenticate the user instance
@@ -221,14 +237,18 @@ def newCommMessages(MessageInfo,Link):
 
     cursor.close()
     cnx.close()
-    pass
+    return
 
 def newEvent(EventInfo):
     # authenticate the user instance
     #acct_auth(AccInfo['AccountNumber'],token)
     cnx,cursor = connect()
+    EventInfo['EventID'] = getLastID('Events','EventID')
+    add_comment = ("INSERT INTO Events "
+              "(EventID, EventName, EventDesc, PostTime,StartTime,EventLocation,PosterID,Category)"
+              "VALUES (%(EventID)s, %(EventName)s, %(EventDesc)s, %(PostTime)s, %(StartTime)s,%(EventLocation)s,%(PosterID)s,%(Category)s)")
 
 
     cursor.close()
     cnx.close()
-    pass
+    return

@@ -1,2 +1,4 @@
-def zachhash():
-    pass
+# temporary
+def zachhash(password):
+    h = hash(password)
+    return h

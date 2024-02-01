@@ -87,3 +87,11 @@ def commentBody(comment_id):
     cnx.commit()
     cnx.close()
     return cursor
+
+def friendPairMessages(pair_id):
+    cnx,cursor = connect()
+    query = ("SELECT * FROM FriendMessages\
+             Where PairID={} ORDER BY SentStamp desc".format(pair_id))
+    cursor.execute(query)
+    cnx.commit()
+    return cnx,cursor
