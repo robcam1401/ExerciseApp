@@ -421,39 +421,30 @@
                     height: dp(30)
 
 
-<SExploreScreen>:
+Explore_kv = '''
+<ExploreScreen>:
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1  # White background color
-        Line:
-            rectangle: (self.x + dp(60), self.y + dp(60), self.width - dp(120), self.height - dp(120))
-            width: 1
-            
-    FloatLayout:
-        BoxLayout:
-            orientation: 'vertical'
-            spacing: dp(10)
-            padding: dp(10)
-            pos_hint: {'center_x': .5, 'center_y': .5}
-            size_hint: .7, .7
-
+	@@ -415,15 +417,18 @@
             # Search Bar
             TextInput:
+                id: search_input
                 hint_text: 'Search...'
                 multiline: False
                 size_hint_y: None
                 height: dp(30)
-
+                on_text_validate: root.on_search(search_input.text)
             # Search Results Section
             ScrollView:
                 Label:
-                    text: 'Search results go here.'
+                    id: search_results
+                    text: ' '
                     font_size: '16sp'
                     size_hint_y: None
                     height: self.texture_size[1]
                     text_size: self.width - dp(20), None
                     valign: 'top'
-
 
 
 <SocialScreen>:
