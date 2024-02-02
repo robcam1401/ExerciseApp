@@ -1,6 +1,23 @@
-from Insert import *
-from Query import *
-from Edit import *
+# required imports
+import sys
+import os
+
+# find absolute paths
+_CloudAPIs =  os.path.join(os.getcwd(), os.path.dirname("CloudAPIs"))
+_libs =  os.path.join(os.getcwd(), os.path.dirname("libs"))
+
+# insert into path variables
+sys.path.insert(0,_CloudAPIs)
+sys.path.insert(0,_libs)
+
+# import from path variables
+from CloudAPIs.Insert import *
+from CloudAPIs.Query import *
+from CloudAPIs.Edit import *
+
+# from Insert import *
+# from Query import *
+# from Edit import *
 
 ## start with the insert functions
 class insert():
@@ -154,6 +171,10 @@ class query():
     # given an account number, returns the row containing the account number
     def account_info(account_number):
         cursor = accountInfo(account_number)
+        return cursor
+    # given an account number, returns the email associated
+    def account_email(account_number):
+        cursor = accountSearchEmail(account_number)
         return cursor
 
     # given an account number, returns a table containing all videos by the specified account

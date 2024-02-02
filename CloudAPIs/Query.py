@@ -23,6 +23,17 @@ def accountSearchName(search_term):
     cnx.close()
     return cursor
 
+# returns the email address associated with a specific account
+def accountSearchEmail(account_id):
+    cnx,cursor = connect()
+
+    query = ("SELECT Email FROM UserAccount\
+             WHERE AccountNumber = {}").format(account_id)
+    cursor.execute(query)
+    cnx.commit()
+    cnx.close()
+    return cursor
+
 # returns all videos posted by a single account
 # ordered by date, descending or ascending, chosen by calling function
 def accountVideosDate(acct_num, sort):
