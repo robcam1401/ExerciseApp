@@ -19,12 +19,21 @@ from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 from kivy.uix.tabbedpanel import TabbedPanel
 from kivymd.app import MDApp
 
-from kivymd.uix.list import MDListItem,MDListItemHeadlineText
+from kivymd.uix.list import MDListItem,MDListItemHeadlineText,MDListItemSupportingText
 from signup import sign_up_user
 from kivy.properties import StringProperty
 from forgotpassVeri import initiate_password_reset
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
+import sys
+sys.path.insert(0,'C:/Users/Cameron/Desktop/Capstone/kivy_venv/ExerciseApp_main/CloudAPIs')
+import os
+_CloudAPIs = os.path.join(os.getcwd(),os.path.dirname("CloundAPIs"))
+_libs = os.path.join(os.getcwd(),os.path.dirname("libs"))
+
+
+from CloudAPIs import sqlInterface 
+from CloudAPIs import APIUnitTests 
 
 class ProfileScreen(Screen):
     pass
@@ -181,7 +190,16 @@ class GroupsScreen(Screen):
         print("group messages")
 
 class MessagesScreen(Screen):
-    pass
+    def update_messeges(self):
+        x = APIUnitTests.s2_demo_query()
+        print(x)
+        for i in range(3):
+            self.ids.grid_messages.add_widget(
+                MDListItem(
+                    MDListItemHeadlineText(text = str(x[i][4])),
+                    MDListItemSupportingText(text = x[i][2])
+                )
+            )
 
 kv = Builder.load_file('ExerciseAppKivyCode.kv') # This is the existing kv string for the login screen
 
