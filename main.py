@@ -632,3 +632,7 @@ Builder.load_string(ProfileSettings_kv)
 
 if __name__ == "__main__":
     ExerciseApp().run()
+
+
+
+
