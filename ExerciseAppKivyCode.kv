@@ -582,38 +582,42 @@
             
 
 <MessagesScreen>:
-    canvas.before:
-        Color:
-            rgba: 1, 1, 1, 1  # White background color
-        Line:
-            rectangle: (self.x + dp(60), self.y + dp(60), self.width - dp(120), self.height - dp(120))
-            width: 1
-    FloatLayout:
-        BoxLayout:
-            orientation: 'vertical'
-            spacing: dp(5)
-            padding: dp(5)
-            pos_hint: {'center_x': .5, 'center_y': .5}
-            size_hint: .7, .7
-            # Tabs Section
+    GridLayout:
+        rows: 2
+        
+        GridLayout:
+            cols: 1
+            rows: 0
             ScrollView:
-                MDListItem:
-                    id: messages_list
-                    pos_hint: {"center_x": .5, "center_y": .5}
-                    size_hint_x: .8
+                size: self.size
+                do_scroll_x: False
+                GridLayout:
+                    id: grid_messages
+                    cols: 1
+                    spacing: 1,0
+                    size_hint_y: None
 
-                    MDListItemHeadlineText:
-                        text: "Headline"
-                    MDListItemHeadlineText:
-                        text: "Headline"
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 15
 
-            BoxLayout:
-                orientation: 'horizontal'
-                spacing: dp(10)
+            canvas:
+                Color:
+                    rgba: (0.746,0.8,0.86,1)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
             Button:
-                text: "add messages"
+                text: "refresh"
                 size_hint_y: None
-                height: dp(30)      
+                height: dp(30)
+                on_press: root.update_messeges()
+            TextInput:
+                id: message
+                hint_text: "Type here"
+                multiline: False
+                
 
             
 

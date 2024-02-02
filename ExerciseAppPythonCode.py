@@ -2,6 +2,8 @@
 #import pip._internal as pip
 #pip.main(['install', 'kivy'])
 
+import sys
+
 from email import feedparser
 from kivy.app import App
 from kivy.lang import Builder
@@ -12,14 +14,45 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 from kivy.uix.tabbedpanel import TabbedPanel
-from kivymd.uix.list import MDListItem,MDListItemHeadlineText
+from kivymd.uix.list import MDListItem,MDListItemHeadlineText,MDListItemSupportingText
 from kivymd.app import MDApp
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
+import sys
+import sys
+sys.path.insert(0,'C:/Users/Cameron/Desktop/Capstone/kivy_venv/ExerciseApp_main/CloudAPIs')
+import os
+_CloudAPIs = os.path.join(os.getcwd(),os.path.dirname("CloundAPIs"))
+_libs = os.path.join(os.getcwd(),os.path.dirname("libs"))
 
 
+from CloudAPIs import sqlInterface 
+from CloudAPIs import APIUnitTests 
+# sys.path.insert(0,_CloudAPIs)
+# sys.path.insert(0,_libs)
+
+# from CloudAPIs.sqlInterface import *
+# from CloudAPIs.APIUnitTests import *
 
 
+x = APIUnitTests.s2_demo_query()
+print(x)
+for i in range(3):
+    print("user: {}".format(x[i][4]))
+    print(x[i][2])
+    
+
+
+# sqlInterface.new_user({
+#         "AccountNumber" : None,
+#         "Username" : 'cam',
+#         "Email" : 'clr064@latech.edu',
+#         "PhoneNumber" : '456',
+#         "Fname" : "cam",
+#         "Minit" : "l",
+#         "Lname" : 'rob',
+#         "UserDoB" : '2011-05-05',
+#         "PasswordHash" : 'qwert'})
 
 
 class ProfileScreen(Screen):
@@ -68,12 +101,32 @@ class GroupsScreen(Screen):
         print("group messages")
 
 class MessagesScreen(Screen):
-    pass
+    def update_messeges(self):
+        x = APIUnitTests.s2_demo_query()
+        print(x)
+        for i in range(3):
+            self.ids.grid_messages.add_widget(
+                MDListItem(
+                    MDListItemHeadlineText(text = str(x[i][4])),
+                    MDListItemSupportingText(text = x[i][2])
+                )
+            )
+            # print("user: {}".format(x[i][4]))
+            # print(x[i][2])
+        # self.ml.add_widget(List.TwoLineListItem(
+        #     text=msg_to_add,
+        #     secondary_text=from_who,
+        #     markup=True,
+        #     text_size=(self.width, None),
+        #     size_hint_y=None,
+        #     font_size=self.height / 23,
+        #     ))
 
 kv = Builder.load_file('ExerciseAppKivyCode.kv') # This is the existing kv string for the login screen
 
 class ExerciseApp(MDApp):
     def build(self):
+        
         # Create a screen manager without transitions for simplicity
         self.sm = ScreenManager(transition=WipeTransition())
 
@@ -125,7 +178,6 @@ class ExerciseApp(MDApp):
         layout = BoxLayout(orientation='vertical')
         layout.add_widget(self.sm)
         layout.add_widget(tab_bar)
-        
         return layout
     
 
