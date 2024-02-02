@@ -1,12 +1,7 @@
 #These next two lines aren't needed unless you're having trouble running kivi.app
 #import pip._internal as pip
 #pip.main(['install', 'kivy'])
-import mysql.connector
-import configparser
-#regular expression library for validation
-import re
-import bcrypt
-from kivy.uix.popup import Popup
+
 from email import feedparser
 from kivy.app import App
 from kivy.lang import Builder
@@ -17,14 +12,17 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 from kivy.uix.tabbedpanel import TabbedPanel
-from kivymd.app import MDApp
-
 from kivymd.uix.list import MDListItem,MDListItemHeadlineText
-from signup import sign_up_user
-from kivy.properties import StringProperty
-from forgotpassVeri import initiate_password_reset
+from kivymd.app import MDApp
+from kivy.uix.image import Image
+from kivy.uix.videoplayer import VideoPlayer
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
+
+
+
+
+
 
 class ProfileScreen(Screen):
     pass
@@ -33,7 +31,20 @@ class FeedScreen(Screen):
     pass
 
 class ExploreScreen(Screen):
-    pass
+    def on_search(self, query):
+        if query.lower() == 'lesson':
+            # Clear previous search results
+            self.ids.search_results.clear_widgets()
+
+            # Display an image and headline for tennis lesson
+            image = Image(source='lesson.jpg', size_hint=(None, None), size=(300, 200), allow_stretch=True)
+            headline = Label(text='Tennis Lesson', font_size='16sp', size_hint_y=None, height=30)
+
+            self.ids.search_results.add_widget(image)
+            self.ids.search_results.add_widget(headline)
+        else:
+            # Display a message for other search queries
+            self.ids.search_results.text = f'No results found for "{query}"'
 
 class SocialScreen(Screen):
     pass
@@ -45,122 +56,13 @@ class ProfileSettingsScreen(Screen):
     pass
 
 class LoginScreen(Screen):
-    def connect(self):
-        # Retrieves user input
-        input_email = self.ids.input_email.text
-        input_password = self.ids.input_password.text
-
-        # for establishing database connection
-        db_connection = get_db_connection()
-        cursor = db_connection.cursor()
-
-        # Parameterized query for safe database interaction
-        query = "SELECT password FROM users WHERE email = %s"
-        cursor.execute(query, (input_email,))
-
-        result = cursor.fetchone()
-
-        if result:
-        # Verifing the hashed password
-            stored_password = result[0].encode('utf-8')  # The hashed password from the database
-            valid_password = bcrypt.checkpw(input_password.encode('utf-8'), stored_password)
-
-            if valid_password:
-                # Correct credentials; proceeds to log in the user
-                self.manager.current = 'profile'  
-            else:
-                # Invalid password;
-                # Show an error message or handle invalid login
-                pass
-        else:
-            # Email not found; 
-            # Show an error message or handle invalid login
-            pass
-
-        cursor.close()
-        db_connection.close()
-
+    pass
 
 class SignupScreen(Screen):
-    def show_popup(self, title, message):
-        popup = Popup(title=title, content=Label(text=message), size_hint=(None, None), size=(400, 200))
-        popup.open()
-        
-    def on_sign_up(self): 
-        print("Signup process initiated....") #debugging line
-        user_email = self.ids.email_input.text
-        ##user_password = self.ids.password_input.text
-        
-        #print(f"Email entered: {user_email}, Password entered: {user_password}") #for the input values
-        
-        if self.validate_email(user_email): #and self.validate_password(user_password):
-            sign_up_user(user_email)
-            #print("Email and password validation passed.") #checking
-            #App.get_running_app().user_email = user_email
-            # Here, after validation, calls the signup function.
-            #sign_up_user(user_email, user_password)
-            # Navigate to verification screen
-            self.manager.current = 'verification'
-        else: 
-            print("Email or password validation failed.") #checking
-            self.show_popup("Invalid Email", "Please enter a valid email address.")
-
-        
-    def validate_email(self, email):
-        # Simple regex for validating an email address
-        pattern = r'^[\w\.-]+@gmail\.com$'
-        return re.match(pattern, email) is not None
-
-   # def validate_password(self, password):
-        # Example: Validate password length; Password length should be 8 or more
-        #return len(password) >= 8
-
-class SignupVerificationScreen(Screen):
-    def verify_code(self):
-        user_code = self.ids.verification_code_input.text  
-        user_email = App.get_running_app().user_email
-        
-        # Assuming you have stored the expected code in memory, e.g., in App.get_running_app().verification_code
-        expected_code = str(App.get_running_app().verification_code)
-        
-        if user_code == expected_code:
-            # Verification successful, navigate to the next screen
-            self.manager.current = 'feed'  # Example target screen
-        else:
-            # Verification failed, show error
-            self.show_popup("Verification Failed", "The code does not match.")
-
+    pass
 
 class ForgotPasswordScreen(Screen):
-    def send_reset_email(self):
-        email = self.ids.email.text
-        if self.validate_email(email):
-            try:
-                # Call the function from forgotpassVeri.py
-                initiate_password_reset(email)
-                # Inform the user to check their email
-                self.show_popup("Success", "A password reset link has been sent to your email.")
-                self.manager.current = 'login'
-            except Exception as e:
-                print(f"Error sending reset email: {e}")
-                self.show_popup("Error", "Failed to send password reset email.")
-                #return  # Keep the user on the same screen to try again
-            finally:
-                # Navigate to login page only after successful email sending
-                self.manager.current = 'login'
-        else:
-            self.show_popup("Invalid email", "The email you entered is not valid.")
-
-    def validate_email(self, email):
-        # Simple regex for validating an email address
-        pattern = r'^[\w\.-]+@gmail\.com$'
-        return re.match(pattern, email) is not None
-
-    def show_popup(self, title, message):
-        popup = Popup(title=title, content=Label(text=message), size_hint=(None, None), size=(600, 200))
-        popup.open()
-
-
+    pass
 
 class FriendsScreen(Screen):
     root = ScrollView(size_hint=(1,None),size=(BoxLayout.width,BoxLayout.height))
@@ -186,8 +88,6 @@ class MessagesScreen(Screen):
 kv = Builder.load_file('ExerciseAppKivyCode.kv') # This is the existing kv string for the login screen
 
 class ExerciseApp(MDApp):
-    user_email = StringProperty(None) 
-    
     def build(self):
         # Create a screen manager without transitions for simplicity
         self.sm = ScreenManager(transition=WipeTransition())
@@ -206,7 +106,6 @@ class ExerciseApp(MDApp):
         #this will change the order in which the screens appear (Feed Screen is default)
         self.sm.add_widget(LoginScreen(name='login'))
         self.sm.add_widget(SignupScreen(name='signup'))
-        self.sm.add_widget(SignupVerificationScreen(name= 'verification'))
         self.sm.add_widget(ForgotPasswordScreen(name='forgot_password_screen'))
         self.sm.add_widget(feed_screen)
         self.sm.add_widget(profile_screen)
@@ -244,17 +143,6 @@ class ExerciseApp(MDApp):
         
         return layout
     
-def get_db_connection():
-    config= configparser.ConfigParser()
-    config.read('config.ini')
-    #to connect to database
-    db_connection = mysql.connector.connect(
-        host=config['mysql']['host'],
-        user=config['mysql']['user'],
-        password=config['mysql']['password'],
-        database=config['mysql']['db']
-    )
-    return db_connection   
 
 
 if __name__ == "__main__":

@@ -30,13 +30,11 @@
                 size_hint_y: None
                 height: self.texture_size[1]
             TextInput:
-                id: input_email
                 hint_text: 'Phone number, username, or email'
                 size_hint_y: None
                 height: 40
                 multiline: False
             TextInput:
-                id: input_password
                 hint_text: 'Password'
                 password: True
                 size_hint_y: None
@@ -101,8 +99,7 @@
                 size: self.texture_size
                 pos_hint: {'center_x': 0.5, 'y': 0.6}
             TextInput:
-                id: email_input
-                hint_text: 'Email'
+                hint_text: 'Phone number or Email'
                 size_hint_y: None
                 height: 40
                 multiline: False
@@ -117,7 +114,6 @@
                 height: 40
                 multiline: False
             TextInput:
-                id: password_input
                 hint_text: 'Password'
                 size_hint_y: None
                 height: 40
@@ -127,54 +123,7 @@
                 text: 'SignUp'
                 size_hint_y: None
                 height: 40
-                on_press: root.on_sign_up()
-            Label:
-                id: error_label
-                text: ''
-                color: 1,0,0,1 #red color for error message
-                size_hint_y: None
-                height:30
-    
-#Verfication screen
-<SignupVerificationScreen>:
-    AnchorLayout:
-        anchor_x: 'center'
-        anchor_y: 'center'
-        BoxLayout:
-            orientation: 'vertical'
-            size_hint: None, None
-            width: 550
-            height: 700
-            padding: 10
-            spacing: 10
-            canvas.before:
-                Color:
-                    rgba: 1, 1, 1, 1  # White border
-                Line:
-                    rectangle: (self.x, self.y, self.width, self.height)
-                    width: 1   
-            Image:
-                source: 'design.jpg'
-                pos_hint: {'center_x': 0.5, 'center_y': 0.7}       
-            Label:
-                text: 'Email Verification Code'
-                font_name: 'Cedarville_Cursive/CedarvilleCursive-Regular.ttf'
-                font_size: '30sp'
-                size_hint: None, None
-                size: self.texture_size
-                pos_hint: {'center_x': 0.5, 'y': 0.6}
-            TextInput:
-                id: verification_code_input
-                hint_text: '######### code'
-                size_hint_y: None
-                height: 40
-                multiline: False
-            Button:
-                text: 'Next'
-                size_hint_y: None
-                height: 40
-                on_press: root.manager.current = 'feed'
-                
+                on_press: root.manager.current = 'login'
 #layout for forgot password page/screen
 <CenteredBoxLayout@BoxLayout>:
     size_hint: None, None
@@ -214,7 +163,7 @@
                 text: 'Send Reset Link'
                 size_hint_y: None
                 height: 40
-                on_press: root.send_reset_email()
+                on_release: root.send_reset_link(email.text)
             Widget:
                 size_hint_y: None
                 height: 40
@@ -227,6 +176,8 @@
                 size_hint_y: None
                 height: 40
                 on_press: root.manager.current = 'login'
+
+
 
 <ProfileScreen>:
     canvas.before:
@@ -421,33 +372,25 @@
                     height: dp(30)
 
 
-<SExploreScreen>:
+Explore_kv = '''
+<ExploreScreen>:
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1  # White background color
-        Line:
-            rectangle: (self.x + dp(60), self.y + dp(60), self.width - dp(120), self.height - dp(120))
-            width: 1
-            
-    FloatLayout:
-        BoxLayout:
-            orientation: 'vertical'
-            spacing: dp(10)
-            padding: dp(10)
-            pos_hint: {'center_x': .5, 'center_y': .5}
-            size_hint: .7, .7
-
+	@@ -415,15 +417,18 @@
             # Search Bar
             TextInput:
+                id: search_input
                 hint_text: 'Search...'
                 multiline: False
                 size_hint_y: None
                 height: dp(30)
-
+                on_text_validate: root.on_search(search_input.text)
             # Search Results Section
             ScrollView:
                 Label:
-                    text: 'Search results go here.'
+                    id: search_results
+                    text: ' '
                     font_size: '16sp'
                     size_hint_y: None
                     height: self.texture_size[1]
@@ -666,4 +609,6 @@
                 height: dp(30)      
 
             
+
+
 
