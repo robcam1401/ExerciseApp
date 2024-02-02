@@ -22,7 +22,8 @@ from kivymd.uix.list import MDListItem,MDListItemHeadlineText
 from signup import sign_up_user
 from kivy.properties import StringProperty
 from forgotpassVeri import initiate_password_reset
-
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.scrollview import ScrollView
 
 class ProfileScreen(Screen):
     pass
