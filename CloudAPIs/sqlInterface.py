@@ -65,7 +65,7 @@ class insert():
         "MessageID" : None,
         "MessageBody" : 'str',
         "SentStamp" : None,
-        "SentUser" : 'int',
+        "SentUser" : 'int'
     }
 
     friend_info_template = {

@@ -1,4 +1,21 @@
-from Insert import connect
+# from Insert import connect
+
+# required imports
+import sys
+import os
+
+os.chdir("..")
+# find absolute paths
+_CloudAPIs =  os.path.join(os.getcwd(), os.path.dirname("CloudAPIs"))
+_libs =  os.path.join(os.getcwd(), os.path.dirname("libs"))
+
+# insert into path variables
+sys.path.insert(0,_CloudAPIs)
+sys.path.insert(0,_libs)
+
+# import from path variables
+from CloudAPIs.Insert import *
+
 ## useful queries for the database
 
 # returns all information about a specified account
