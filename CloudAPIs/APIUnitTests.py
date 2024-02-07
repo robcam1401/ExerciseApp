@@ -1,14 +1,20 @@
+<<<<<<< HEAD:CloudAPIs/API-UnitTests.py
 <<<<<<< Updated upstream:CloudAPIs/API-UnitTests.py
 from Insert import *
 from Query import *
 from Edit import *
 =======
+=======
+>>>>>>> 8387eb1308925c1ecfd7788264dae94fd9b9dabc:CloudAPIs/APIUnitTests.py
 # required imports
 import sys
 import os
 
 # find absolute paths
+<<<<<<< HEAD:CloudAPIs/API-UnitTests.py
 os.chdir("..")
+=======
+>>>>>>> 8387eb1308925c1ecfd7788264dae94fd9b9dabc:CloudAPIs/APIUnitTests.py
 _CloudAPIs =  os.path.join(os.getcwd(), os.path.dirname("CloudAPIs"))
 _libs =  os.path.join(os.getcwd(), os.path.dirname("libs"))
 
@@ -27,9 +33,11 @@ from CloudAPIs.sqlInterface import *
 # from Edit import *
 # from sqlInterface import *
 
+<<<<<<< HEAD:CloudAPIs/API-UnitTests.py
 >>>>>>> Stashed changes:CloudAPIs/APIUnitTests.py
+=======
+>>>>>>> 8387eb1308925c1ecfd7788264dae94fd9b9dabc:CloudAPIs/APIUnitTests.py
 import datetime
-from sqlInterface import *
 
 ########################
 # Unit tests for inserting, deleting, and modifying data in the UserAccount database

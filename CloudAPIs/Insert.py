@@ -1,6 +1,17 @@
-import mysql.connector
+# required imports
+import sys
+import os
+
+# find absolute paths
+_libs =  os.path.join(os.getcwd(), os.path.dirname("libs"))
+
+# insert into path variables
+sys.path.insert(0,_libs)
+
+# import from path variables
+import libs.mysql.connector as mysql
 import datetime
-from zachhash import zachhash
+#from zachhash import zachhash
 #from authenticator import acct_auth, create_token
 
 #######################################################
@@ -17,7 +28,7 @@ from zachhash import zachhash
 ## Helper Methods mainly type-checking
 
 def connect():
-    cnx = mysql.connector.connect(user='GenericUser',host='34.121.87.64',database='ExerciseApp')
+    cnx = mysql.connect(user='GenericUser',host='34.121.87.64',database='ExerciseApp')
     cursor = cnx.cursor(buffered=True)
     return cnx,cursor
 
