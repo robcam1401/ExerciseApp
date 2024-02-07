@@ -8,10 +8,13 @@ from kivy.lang import Builder
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy_garden.mapview import MapView
+from kivy.uix.image import Image
+from kivy.uix.videoplayer import VideoPlayer
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from kivy.uix.tabbedpanel import TabbedPanel
+#from signup import send_verification_email, generate_verification_code, sign_up_user
 
 # Login Page
 kv = '''
@@ -115,6 +118,7 @@ signup_kv = '''
                 size: self.texture_size
                 pos_hint: {'center_x': 0.5, 'y': 0.6}
             TextInput:
+                #id: email_input
                 hint_text: 'Phone number or Email'
                 size_hint_y: None
                 height: 40
@@ -130,6 +134,7 @@ signup_kv = '''
                 height: 40
                 multiline: False
             TextInput:
+                #id: password_input
                 hint_text: 'Password'
                 size_hint_y: None
                 height: 40
@@ -394,7 +399,7 @@ Feed_kv = '''
 
 '''
 Explore_kv = '''
-<SExploreScreen>:
+<ExploreScreen>:
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1  # White background color
@@ -412,15 +417,18 @@ Explore_kv = '''
 
             # Search Bar
             TextInput:
+                id: search_input
                 hint_text: 'Search...'
                 multiline: False
                 size_hint_y: None
                 height: dp(30)
+                on_text_validate: root.on_search(search_input.text)
 
             # Search Results Section
             ScrollView:
                 Label:
-                    text: 'Search results go here.'
+                    id: search_results
+                    text: ' '
                     font_size: '16sp'
                     size_hint_y: None
                     height: self.texture_size[1]
@@ -541,7 +549,20 @@ class FeedScreen(Screen):
     pass
 
 class ExploreScreen(Screen):
-    pass
+    def on_search(self, query):
+        if query.lower() == 'lesson':
+            # Clear previous search results
+            self.ids.search_results.clear_widgets()
+
+            # Display an image and headline for tennis lesson
+            image = Image(source='lesson.jpg', size_hint=(None, None), size=(300, 200), allow_stretch=True)
+            headline = Label(text='Tennis Lesson', font_size='16sp', size_hint_y=None, height=30)
+            
+            self.ids.search_results.add_widget(image)
+            self.ids.search_results.add_widget(headline)
+        else:
+            # Display a message for other search queries
+            self.ids.search_results.text = f'No results found for "{query}"'
 
 class SocialScreen(Screen):
     pass
@@ -556,6 +577,11 @@ class LoginScreen(Screen):
     pass
 
 class SignupScreen(Screen):
+    #def sign_up(self): 
+        #user_email = self.ids.email_input.text
+        #user_password = self.ids.password_input.text
+         #calling sign-up function from signup.py
+         #sign_up_user(user_email, user_password)
     pass
 
 class ForgotPasswordScreen(Screen):
@@ -624,3 +650,7 @@ Builder.load_string(ProfileSettings_kv)
 
 if __name__ == "__main__":
     ExerciseApp().run()
+
+
+
+
