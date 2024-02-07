@@ -1,6 +1,33 @@
+<<<<<<< Updated upstream:CloudAPIs/API-UnitTests.py
 from Insert import *
 from Query import *
 from Edit import *
+=======
+# required imports
+import sys
+import os
+
+# find absolute paths
+os.chdir("..")
+_CloudAPIs =  os.path.join(os.getcwd(), os.path.dirname("CloudAPIs"))
+_libs =  os.path.join(os.getcwd(), os.path.dirname("libs"))
+
+# insert into path variables
+sys.path.insert(0,_CloudAPIs)
+sys.path.insert(0,_libs)
+
+# import from path variables
+from CloudAPIs.Insert import *
+from CloudAPIs.Query import *
+from CloudAPIs.Edit import *
+from CloudAPIs.sqlInterface import *
+
+# from Insert import *
+# from Query import *
+# from Edit import *
+# from sqlInterface import *
+
+>>>>>>> Stashed changes:CloudAPIs/APIUnitTests.py
 import datetime
 from sqlInterface import *
 
@@ -107,7 +134,6 @@ def s2_demo_query():
         cursor_list.append(item)
     cursor.close()
     cnx.close()
-    print(cursor_list)
     return cursor_list
         
 
@@ -287,4 +313,6 @@ def s2_unit_test():
 
 #ConnectAndInsert()
 #s2_unit_test()
-s2_demo_query()
+m = s2_demo_query()
+for i in m:
+    print(i[2])
