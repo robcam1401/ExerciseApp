@@ -2,22 +2,22 @@
 import sys
 import os
 
-# find absolute paths
-_CloudAPIs =  os.path.join(os.getcwd(), os.path.dirname("CloudAPIs"))
-_libs =  os.path.join(os.getcwd(), os.path.dirname("libs"))
+# # find absolute paths
+# _CloudAPIs =  os.path.join(os.getcwd(), os.path.dirname("CloudAPIs"))
+# _libs =  os.path.join(os.getcwd(), os.path.dirname("libs"))
 
-# insert into path variables
-sys.path.insert(0,_CloudAPIs)
-sys.path.insert(0,_libs)
+# # insert into path variables
+# sys.path.insert(0,_CloudAPIs)
+# sys.path.insert(0,_libs)
 
 # import from path variables
-from CloudAPIs.Insert import *
-from CloudAPIs.Query import *
-from CloudAPIs.Edit import *
+# from CloudAPIs.Insert import *
+# from CloudAPIs.Query import *
+# from CloudAPIs.Edit import *
 
-# from Insert import *
-# from Query import *
-# from Edit import *
+from Insert import *
+from Query import *
+from Edit import *
 
 ## start with the insert functions
 class insert():
@@ -120,62 +120,69 @@ class insert():
 
     def new_user(user_info):
         newAccountInsert(user_info)
-        return
+        return 'Inserted'
 
     def new_video(video_info):
         newVideoInsert(video_info)
-        return
+        return 'Inserted'
 
     def new_content_comment(comment_info):
         newCommentInsertContent(comment_info)
-        return
+        return 'Inserted'
     def new_video_comment(comment_info):
         newCommentInsertVideo(comment_info)
-        return
+        return 'Inserted'
 
     def new_content(content_info):
         newContentInsert(content_info)
-        return
+        return 'Inserted'
 
     def add_friends(friend_info):
         newFriendsInsert(friend_info)
-        return
+        return 'Inserted'
 
     def new_message(message_info):
         newFriendMessages(message_info)
-        return
+        return 'Inserted'
 
     def new_message_link(message_info,link):
         newFriendMessages(message_info,link)
-        return
+        return 'Inserted'
 
     def new_community(community_info):
         newCommunityInsert(community_info)
-        return
+        return 'Inserted'
 
     def new_comm_message(message_info):
         newCommMessages(message_info)
-        return
+        return 'Inserted'
 
     def new_comm_message(message_info,link):
         newCommMessages(message_info,link)
-        return
+        return 'Inserted'
 
     def new_event(event_info):
         newEvent(event_info)
-        return
+        return 'Inserted'
 
 ## query functions
 class query():
 
     # given an account number, returns the row containing the account number
-    def account_info(account_number):
-        cursor = accountInfo(account_number)
-        return cursor
+    def account_info(accountinfo):
+        cursor = accountInfo(accountinfo['AccountNumber'])
+        return_matrix = []
+        for i in cursor:
+            return_matrix.append(i)
+        return return_matrix
     # given an account number, returns the email associated
-    def account_email(account_number):
-        cursor = accountSearchEmail(account_number)
-        return cursor
+    def account_email(accountinfo):
+        cursor = accountSearchEmail(int(accountinfo['AccountNumber']))
+        return_matrix = []
+        # should change matrix to a dictionary to turn into json
+        for i in cursor:
+            return_matrix.append(i)
+        return return_matrix
 
     # given an account number, returns a table containing all videos by the specified account
     # ordered descending and ascending by date

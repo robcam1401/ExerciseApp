@@ -9,7 +9,7 @@ _libs =  os.path.join(os.getcwd(), os.path.dirname("libs"))
 sys.path.insert(0,_libs)
 
 # import from path variables
-import libs.mysql.connector as mysql
+import mysql.connector as mysql
 import datetime
 #from zachhash import zachhash
 #from authenticator import acct_auth, create_token
